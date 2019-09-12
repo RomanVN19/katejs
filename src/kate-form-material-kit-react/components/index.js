@@ -19,8 +19,6 @@ along with Library kate-form-material-kit-react.
 If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'babel-polyfill';
-
 import MainLayout from './MainLayout';
 import Select from './Select';
 import DateInput from './DateInput';

@@ -21,7 +21,7 @@ along with KateJS.  If not, see <https://www.gnu.org/licenses/>.
 import webpack from 'webpack';
 import fs from 'fs';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import KateServer from './KateServer';
+import Server from './KateServer';
 
 import Fields from './fields';
 import { makeEntitiesFromStructures, trivialLogger } from './server';
@@ -36,7 +36,7 @@ export default class KateJS {
     this.env = env;
   }
   createServer() {
-    this.server = new KateServer(this);
+    this.server = new Server(this);
   }
   syncDatabase() {
     this.createServer();
@@ -130,4 +130,5 @@ export {
   makeEntitiesFromStructures,
   use,
   ApiError,
+  Server,
 };
