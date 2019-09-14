@@ -10,7 +10,6 @@ module.exports = function (env) {
     target: 'web',
     entry: {
       client: './src/client.js',
-      fields: './src/fields.js',
       translations: './src/translations.js',
     },
     output: {
@@ -26,7 +25,10 @@ module.exports = function (env) {
        */
       libraryTarget: 'umd',
     },
-    externals: [nodeExternals()],
+    externals: [
+      nodeExternals(),
+      './fields',
+    ],
     resolve: {
       mainFields: ['module', 'main'],
       /**
@@ -50,39 +52,42 @@ module.exports = function (env) {
       }),
     ],
     module: {
-      rules: [{
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true,
-          cacheCompression: false,
-        },
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: process.env.NODE_ENV === 'development',
-            },
+      rules: [
+        /* { test: /fields\.js$/, loader: 'file-loader', options: { name: '[name].[ext]' } }, */
+        {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            cacheCompression: false,
           },
-          'css-loader',
-        ],
-      },
-      {
-        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'static/media/[name].[hash:8].[ext]',
         },
-      },
-      {
-        test: /\.svg$/,
-        use: ['@svgr/webpack', 'url-loader'],
-      }],
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: process.env.NODE_ENV === 'development',
+              },
+            },
+            'css-loader',
+          ],
+        },
+        {
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: 'static/media/[name].[hash:8].[ext]',
+          },
+        },
+        {
+          test: /\.svg$/,
+          use: ['@svgr/webpack', 'url-loader'],
+        },
+      ],
     },
   };
 };

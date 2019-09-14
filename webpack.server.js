@@ -23,7 +23,10 @@ module.exports = function (env) {
        */
       libraryTarget: 'umd',
     },
-    externals: [nodeExternals()],
+    externals: [
+      nodeExternals(),
+      './fields',
+    ],
     resolve: {
       mainFields: ['module', 'main'],
       /**
@@ -39,6 +42,7 @@ module.exports = function (env) {
     },
     module: {
       rules: [
+        /* { test: /fields\.js$/, loader: 'file-loader', options: { name: '[name].[ext]' } }, */
         { test: /\.js$/, loader: 'babel-loader' },
       ],
     },

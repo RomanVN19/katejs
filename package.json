@@ -1,6 +1,6 @@
 {
   "name": "katejs",
-  "version": "1.0.7",
+  "version": "1.0.10",
   "description": "KateJS - фреймворк разработки бизнес приложений.",
   "main": "lib/index.js",
   "scripts": {
@@ -71,6 +71,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.7.0",
+    "file-loader": "^4.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^1.18.3",
     "style-loader": "^0.21.0",
