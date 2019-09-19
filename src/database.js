@@ -127,9 +127,9 @@ export default class Database {
   constructor({ databaseParams, entities, logger }) {
     this.logger = logger;
     this.sequelize = new Sequelize({
-      ...databaseParams,
       dialect: 'mysql',
       dialectOptions: { decimalNumbers: true },
+      ...databaseParams,
     });
     this.Sequelize = Sequelize;
     this.entities = entities;
