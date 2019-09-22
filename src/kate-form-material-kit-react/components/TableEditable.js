@@ -54,7 +54,7 @@ class TableDesktop extends Component {
     }
   }
   render() {
-    const { classes, tableHead, tableRows, tableHeaderColor, path, t, hideRowActions } = this.props;
+    const { classes, tableHead, tableRows, tableHeaderColor, path, t, hideRowActions, rowClick, tableData } = this.props;
     return (
       <Table className={classes.table} onKeyDown={this.handleKeyDown}>
         {tableHead !== undefined ? (
@@ -77,7 +77,7 @@ class TableDesktop extends Component {
         ) : null}
         <TableBody>
           {(tableRows || []).map((prop, rowIndex) => (
-            <TableRow key={rowIndex} >
+            <TableRow key={rowIndex} onClick={() => rowClick(tableData[rowIndex])}>
               {tableHead.map((column, columnIndex) => (
                 <TableCell className={classes.tableCell} key={columnIndex}>
                   {/* column.title */}
@@ -213,17 +213,25 @@ class CustomTableEditable extends Component {
   mapRows = (data, showTitle) => {
     const { tableHead: columns, setData } = this.props;
     const rows = data.map((row, rowIndex) =>
+      // eslint-disable-next-line implicit-arrow-linebreak
       columns.map(({ dataPath, title, onChange, onClick, getElement, ...rest }, colIndex) => {
         let element = {};
         if (getElement) {
           element = getElement(getIn(row, dataPath || ''));
         }
         const value = getIn(row, dataPath || '');
+        const type = element.type || Elements.LABEL;
+        let style;
+        if (!element.type) {
+          style = { marginBottom: 0 };
+        }
         let cellTitle = showTitle && title;
         if (rest.type === Elements.LABEL && value) cellTitle = undefined;
         return {
           title: cellTitle,
           value,
+          type,
+          style,
           ...element,
           onChange: val =>
             this.rowChange(rowIndex, dataPath, val, colIndex, element.onChange || onChange),
@@ -266,7 +274,7 @@ class CustomTableEditable extends Component {
     if (e.keyCode === 13) this.addRow();
   }
   render() {
-    const { classes, tableHead, tableRows, tableHeaderColor, path, t, hideRowActions, tableData } = this.props;
+    const { classes, tableHead, tableRows, tableHeaderColor, path, t, hideRowActions, tableData, rowClick } = this.props;
     return (
       <Fragment>
         <Hidden only={['xs']} implementation="js">
@@ -284,6 +292,7 @@ class CustomTableEditable extends Component {
               moveUp={this.moveUp}
               moveDown={this.moveDown}
               delete={this.delete}
+              rowClick={rowClick}
             />
           </div>
         </Hidden>
@@ -301,6 +310,7 @@ class CustomTableEditable extends Component {
             moveUp={this.moveUp}
             moveDown={this.moveDown}
             delete={this.delete}
+            rowClick={rowClick}
           />
         </Hidden>
       </Fragment>
