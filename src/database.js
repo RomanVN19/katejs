@@ -126,11 +126,15 @@ const makeAssociations = (entities, logger) => {
 export default class Database {
   constructor({ databaseParams, entities, logger }) {
     this.logger = logger;
-    this.sequelize = new Sequelize({
-      dialect: 'mysql',
-      dialectOptions: { decimalNumbers: true },
-      ...databaseParams,
-    });
+    if (Array.isArray(databaseParams)) {
+      this.sequelize = new Sequelize(...databaseParams);
+    } else {
+      this.sequelize = new Sequelize({
+        dialect: 'mysql',
+        dialectOptions: { decimalNumbers: true },
+        ...databaseParams,
+      });
+    }
     this.Sequelize = Sequelize;
     this.entities = entities;
     this.createModels();

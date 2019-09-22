@@ -6,6 +6,17 @@ export const capitalize = string => `${string.charAt(0).toUpperCase()}${string.s
 export const makeTitle = string => capitalize(string.replace(/([a-z0-9])([A-Z])/g, '$1 $2'));
 export const makeTitlePlural = string => `${makeTitle(string)}s`;
 
+export const decimalFormat = (length, precision) => {
+  const intLength = (length || 15) - (precision || 2);
+  const re = precision === 0 ? new RegExp(`\\d{0,${length || 15}}`)
+    : new RegExp(`\\d{0,${intLength}}(\\.\\d{0,${precision || 2}})?`);
+  return (val) => {
+    const res = re.exec(val);
+    // numbers formated as string to allow enter partial decimal (like "10." -> "10.5")
+    return res ? res[0] : 0;
+  };
+};
+
 const elementsByFields = {
   [Fields.STRING]: Elements.INPUT,
   [Fields.REFERENCE]: Elements.SELECT,
