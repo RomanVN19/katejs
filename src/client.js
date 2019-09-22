@@ -9,7 +9,7 @@ import { ConfirmDialog } from './forms/Dialogs';
 import makeItemForm from './forms/Item';
 import makeListForm from './forms/List';
 import translations from './translations';
-import { capitalize, makeTitle, makeTitlePlural, getElement, getTableElement, decimalFormat } from './forms/shared';
+import { capitalize, makeTitle, makeTitlePlural, getElement, getTableElement, decimalFormat } from './shared';
 
 
 const use = (parent, ...classes) => {

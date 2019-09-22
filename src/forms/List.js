@@ -1,6 +1,6 @@
 import { Elements } from 'kate-form-material-kit-react';
 import Form from './Form';
-import { makeTitle, makeTitlePlural } from './shared';
+import { makeTitle, makeTitlePlural } from '../shared';
 import Fields from '../fields';
 
 const add = Symbol('add');

@@ -1,5 +1,5 @@
 import { Elements } from 'kate-form-material-kit-react';
-import Fields from '../fields';
+import Fields from './fields';
 
 export const capitalize = string => `${string.charAt(0).toUpperCase()}${string.slice(1).toLowerCase()}`;
 
