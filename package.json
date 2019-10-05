@@ -1,6 +1,6 @@
 {
   "name": "katejs",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "KateJS - фреймворк разработки бизнес приложений.",
   "main": "lib/index.js",
   "scripts": {

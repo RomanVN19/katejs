@@ -10,7 +10,7 @@ import { apiUrl } from './http';
 import Fields from './fields';
 import { makeEntitiesFromStructures, trivialLogger } from './server';
 import Entity from './Entity';
-import { literal, rawQuery } from './Entity';
+import { literal, rawQuery, model } from './Entity';
 
 export default class KateJS {
   constructor({ AppServer, logger, database, http, env }) {
@@ -119,4 +119,5 @@ export {
   apiUrl,
   literal,
   rawQuery,
+  model,
 };
