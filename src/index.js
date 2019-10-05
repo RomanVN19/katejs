@@ -6,10 +6,11 @@ import webpack from 'webpack';
 import fs from 'fs';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import Server from './KateServer';
-
+import { apiUrl } from './http';
 import Fields from './fields';
 import { makeEntitiesFromStructures, trivialLogger } from './server';
 import Entity from './Entity';
+import { literal, rawQuery } from './Entity';
 
 export default class KateJS {
   constructor({ AppServer, logger, database, http, env }) {
@@ -115,4 +116,7 @@ export {
   use,
   ApiError,
   Server,
+  apiUrl,
+  literal,
+  rawQuery,
 };
