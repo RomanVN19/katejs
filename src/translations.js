@@ -6,6 +6,7 @@ const translate = {
   ru: {
     ...translations.ru,
     'Expenses': 'Расходы',
+    'Expense': 'Расход',
   },
 };
 

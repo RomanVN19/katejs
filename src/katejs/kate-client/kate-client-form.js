@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { KateForm, withKateForm } from 'kate-form';
+import { KateForm, withKateForm } from '../kate-form';
 
 class KateClientForm extends Component {
   constructor(props) {

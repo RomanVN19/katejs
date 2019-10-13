@@ -89,5 +89,17 @@
     "webpack-cli": "^3.3.8",
     "webpack-node-externals": "^1.7.2"
   },
-  "homepage": "https://github.com/romannep/katejs#readme"
+  "homepage": "https://github.com/romannep/katejs#readme",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

@@ -20,7 +20,7 @@ If not, see <https://www.gnu.org/licenses/>.
 */
 
 import React from 'react';
-import { getIn } from 'kate-form';
+import { getIn } from '../../kate-form';
 import { withStyles } from '@material-ui/core/styles';
 import ResponsiveTable from './TableResponsive/index';
 import tableStyle from './tableStyle';

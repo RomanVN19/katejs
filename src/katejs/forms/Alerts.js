@@ -1,5 +1,5 @@
-import { Form } from 'kate-client';
-import { Elements } from 'kate-form-material-kit-react';
+import { Form } from '../kate-client';
+import { Elements } from '../kate-form-material-kit-react';
 
 export const showAlert = Symbol('showAlert');
 

@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
-import { getIn } from 'kate-form';
+import { getIn } from '../kate-form';
 
 import configureStore from './store';
 import registerServiceWorker from './registerServiceWorker';

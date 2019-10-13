@@ -28,7 +28,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 
-import { getIn } from 'kate-form';
+import { getIn } from '../../kate-form';
 
 import tableStyle from './tableStyle';
 

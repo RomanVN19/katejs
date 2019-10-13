@@ -21,7 +21,7 @@ If not, see <https://www.gnu.org/licenses/>.
 */
 
 import React, { Fragment } from 'react';
-import { KateForm } from 'kate-form';
+import { KateForm } from '../kate-form';
 
 import CustomInput from 'material-kit-react-package/dist/components/CustomInput/CustomInput';
 import Button from 'material-kit-react-package/dist/components/CustomButtons/Button';

@@ -41,7 +41,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import { KateForm } from 'kate-form';
+import { KateForm } from '../../kate-form';
 
 import { renderThumb } from './Layout';
 

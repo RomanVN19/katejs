@@ -38,7 +38,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Card from 'material-kit-react-package/dist/components/Card/Card';
 import CardBody from 'material-kit-react-package/dist/components/Card/CardBody';
 
-import { KateForm, getIn, createContent } from 'kate-form';
+import { KateForm, getIn, createContent } from '../../kate-form';
 
 import { Elements } from '../components';
 import tableStyle from './tableStyle';

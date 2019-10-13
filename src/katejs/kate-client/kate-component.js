@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { KateFormProvider } from 'kate-form';
+import { KateFormProvider } from '../kate-form';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { currentLayout, currentForms } from './classes/App';
 import KateClientForm from './kate-client-form';
