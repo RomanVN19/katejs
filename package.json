@@ -1,6 +1,6 @@
 {
   "name": "katejs",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "KateJS - фреймворк разработки бизнес приложений.",
   "main": "lib/index.js",
   "scripts": {
@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js",
     "build": "npm run webpack -- --config webpack.prod.js --progress --profile --bail",
-    "build-shared": "babel src/fields.js --out-dir lib --copy-files",
+    "build-fields": "babel src/fields.js --out-dir lib --copy-files",
+    "build-translations": "babel src/translations.js --out-dir lib --copy-files",
+    "build-shared": "npm run build-fields && npm run build-translations",
     "build-client": "webpack --config webpack.client.js --progress --profile --bail",
     "build-server": "webpack --config webpack.server.js --progress --profile --bail"
   },
