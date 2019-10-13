@@ -1,0 +1,1 @@
+this.app.allow - only in afterInit on direct link

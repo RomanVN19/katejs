@@ -1,6 +1,5 @@
-import { Server as KateJSServer } from 'katejs';
+import KateJS from 'katejs';
 import AppServer from './AppServer';
-import translations from './translations';
 
 let env;
 if (process.env.ENV) {
@@ -15,18 +14,16 @@ const database = {
   database: process.env.DB_DB || env.database.database,
   username: process.env.DB_USER || env.database.username,
   password: process.env.DB_PASSWORD || env.database.password,
-  storage: process.env.DB_STORAGE || env.database.storage,
 };
-if (env.database.dialect) {
-  database.dialect = env.database.dialect;
-}
 const http = {
   port: process.env.PORT || env.http.port,
 };
 
-const server = new KateJSServer({ AppServer, http, database, env, translations });
-if (process.argv.indexOf('dbsync') > -1) {
-  server.syncDatabase();
+const platform = new KateJS({ AppServer, http, database, env });
+if (process.argv.indexOf('build-client') > -1) {
+  platform.createServer(); // for index title
+  platform.compileClient();
 } else {
-  server.run();
+  platform.compileClient();
+  platform.startServer();
 }
