@@ -18,3 +18,7 @@
 
 ## 0.7.3 (18.07.2019)
 - Updated dependencies
+
+===============
+19.10.2019
+- tabs flex wrap + onChage (up mkr 1.3.9)
