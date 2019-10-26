@@ -1,27 +1,4 @@
-/* eslint-disable react/no-array-index-key */
-
-/*
-Copyright © 2018 Roman Nep <neproman@gmail.com>
-
-This file is part of kate-form-material-kit-react library.
-
-Library kate-form-material-kit-react is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Library kate-form-material-kit-react is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Library kate-form-material-kit-react.
-If not, see <https://www.gnu.org/licenses/>.
-*/
-
 import React, { Fragment } from 'react';
-import { KateForm } from '../kate-form';
 
 import CustomInput from 'material-kit-react-package/dist/components/CustomInput/CustomInput';
 import Button from 'material-kit-react-package/dist/components/CustomButtons/Button';
@@ -37,6 +14,7 @@ import NavPills from 'material-kit-react-package/dist/components/NavPills/NavPil
 import Paginations from 'material-kit-react-package/dist/components/Pagination/Pagination';
 import LinearProgress from 'material-kit-react-package/dist/components/CustomLinearProgress/CustomLinearProgress';
 
+import { KateForm } from '../kate-form';
 import LoadingImg from './img/loading.gif';
 
 import { Select, DateInput, CustomSwitch,
