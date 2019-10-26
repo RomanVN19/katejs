@@ -172,7 +172,10 @@ export default class Database {
         entity.structure.tables.forEach((tableStructure) => {
           const table = {};
           entity[tables][tableStructure.name] = table;
-          const { params: tableParams, options: tableOptions } = getModelParams(table, tableStructure, true);
+          const {
+            params: tableParams,
+            options: tableOptions,
+          } = getModelParams(table, tableStructure, true);
           // eslint-disable-next-line no-param-reassign
           table[model] = this.sequelize.define(`${entityName.toLowerCase()}${capitalize(tableStructure.name)}`, tableParams, tableOptions);
           table[model].Name = `${entityName.toLowerCase()}${capitalize(tableStructure.name)}`;
