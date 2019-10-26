@@ -110,13 +110,7 @@ const makeAssociations = (entities, logger, isSqlite = false) => {
             if (logger) logger.info('Defined association:', table[model].Name, field.name, ' - ', entities[field.entity][model].Name);
           }
         });
-        const relationsProps = {};
-        if (isSqlite) {
-          // sqlite sync do backup and drop and it cause all table data deleted
-          // use NO ACTION to prevend data loose on dnsync
-          relationsProps.onDelete = 'NO ACTION';
-        }
-        entity[model].hasMany(table[model], { as: tableStructure.name, uniqueKey: `tab${tabindex}`, ...relationsProps });
+        entity[model].hasMany(table[model], { as: tableStructure.name, uniqueKey: `tab${tabindex}` });
         if (logger) logger.info('Defined association:', entity[model].Name, tableStructure.name, ' ->>', table[model].Name);
         entity[modelGetOptions].include.push({
           model: table[model],
