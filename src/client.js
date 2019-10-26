@@ -1,8 +1,8 @@
 /*
 Copyright © 2018 Roman Nep <neproman@gmail.com>
 */
-import KateClient from 'kate-client';
-import { Elements } from 'kate-form-material-kit-react';
+import KateClient from './kate-client';
+import { Elements } from './kate-form-material-kit-react';
 import Form from './forms/Form';
 import App from './forms/App';
 import { ConfirmDialog } from './forms/Dialogs';

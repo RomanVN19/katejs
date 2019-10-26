@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { Elements } from 'kate-form-material-kit-react';
+import { Elements } from '../kate-form-material-kit-react';
 
 const ConfirmDialog = ({ form, id }) => {
   let resolveFunc;

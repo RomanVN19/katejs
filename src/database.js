@@ -89,7 +89,7 @@ const getModelParams = (entity, structure, rowNumber) => {
   return { params: modelParams, options: modelOptions };
 };
 
-const makeAssociations = (entities, logger) => {
+const makeAssociations = (entities, logger, isSqlite = false) => {
   Object.values(entities).forEach((entity) => {
     if (entity.structure && entity.structure.fields) {
       entity.structure.fields.forEach((field, index) => {
@@ -110,7 +110,13 @@ const makeAssociations = (entities, logger) => {
             if (logger) logger.info('Defined association:', table[model].Name, field.name, ' - ', entities[field.entity][model].Name);
           }
         });
-        entity[model].hasMany(table[model], { as: tableStructure.name, uniqueKey: `tab${tabindex}` });
+        const relationsProps = {};
+        if (isSqlite) {
+          // sqlite sync do backup and drop and it cause all table data deleted
+          // use NO ACTION to prevend data loose on dnsync
+          relationsProps.onDelete = 'NO ACTION';
+        }
+        entity[model].hasMany(table[model], { as: tableStructure.name, uniqueKey: `tab${tabindex}`, ...relationsProps });
         if (logger) logger.info('Defined association:', entity[model].Name, tableStructure.name, ' ->>', table[model].Name);
         entity[modelGetOptions].include.push({
           model: table[model],
@@ -137,8 +143,9 @@ export default class Database {
     }
     this.Sequelize = Sequelize;
     this.entities = entities;
-    this.createModels();
+    this.createModels(databaseParams.dialect === 'sqlite');
   }
+
   async init() {
     try {
       await this.sequelize.authenticate();
@@ -148,7 +155,8 @@ export default class Database {
       process.exit(e);
     }
   }
-  createModels() {
+
+  createModels(isSqlite) {
     Object.keys(this.entities).forEach((entityName) => {
       const entity = this.entities[entityName];
       if (entity.structure && entity.structure.fields) {
@@ -163,8 +171,7 @@ export default class Database {
         entity.structure.tables.forEach((tableStructure) => {
           const table = {};
           entity[tables][tableStructure.name] = table;
-          const { params: tableParams, options: tableOptions }
-            = getModelParams(table, tableStructure, true);
+          const { params: tableParams, options: tableOptions } = getModelParams(table, tableStructure, true);
           // eslint-disable-next-line no-param-reassign
           table[model] = this.sequelize.define(`${entityName.toLowerCase()}${capitalize(tableStructure.name)}`, tableParams, tableOptions);
           table[model].Name = `${entityName.toLowerCase()}${capitalize(tableStructure.name)}`;
@@ -172,8 +179,9 @@ export default class Database {
         });
       }
     });
-    makeAssociations(this.entities, this.logger);
+    makeAssociations(this.entities, this.logger, isSqlite);
   }
+
   async sync() {
     await this.sequelize.sync({ alter: true });
   }

@@ -18,3 +18,12 @@
 
 ## 0.7.3 (18.07.2019)
 - Updated dependencies
+
+## 1.0.23 (18.07.2019)
+- Lots small fixies
+- changed files structure and export
+
+## 1.0.24 (26.19.2019)
+- tabs flex wrap + onTabChage 
+- user client allow true if no users
+- prevent data loose on sqlite dbsync

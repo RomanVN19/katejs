@@ -1,24 +1,5 @@
 /* eslint-disable react/no-multi-comp */
 
-/*
-Copyright © 2018 Roman Nep <neproman@gmail.com>
-
-This file is part of kate-form-material-kit-react library.
-
-Library kate-form-material-kit-react is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Library kate-form-material-kit-react is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with Library kate-form-material-kit-react.
-If not, see <https://www.gnu.org/licenses/>.
-*/
 
 import React, { Component, Fragment } from 'react';
 
@@ -38,23 +19,26 @@ import Hidden from '@material-ui/core/Hidden';
 import Card from 'material-kit-react-package/dist/components/Card/Card';
 import CardBody from 'material-kit-react-package/dist/components/Card/CardBody';
 
-import { KateForm, getIn, createContent } from 'kate-form';
+import { KateForm, getIn, createContent } from '../../kate-form';
 
 import { Elements } from '../components';
 import tableStyle from './tableStyle';
 
 class TableDesktop extends Component {
   componentWillMount() {
+    // eslint-disable-next-line react/destructuring-assignment
     this.props.mapRows(this.props.tableData || []);
   }
+
   componentWillReceiveProps(nextProps) {
     const { tableData } = this.props;
     if (tableData !== nextProps.tableData) {
       this.props.mapRows(nextProps.tableData || []);
     }
   }
+
   render() {
-    const { classes, tableHead, tableRows, tableHeaderColor, path, t, hideRowActions, rowClick, tableData } = this.props;
+    const { classes, tableHead, tableRows, tableHeaderColor, path, t, hideRowActions, rowClick = () => {}, tableData } = this.props;
     return (
       <Table className={classes.table} onKeyDown={this.handleKeyDown}>
         {tableHead !== undefined ? (
@@ -123,12 +107,14 @@ class TableMobile extends Component {
   componentWillMount() {
     this.props.mapRows(this.props.tableData || [], true);
   }
+
   componentWillReceiveProps(nextProps) {
     const { tableData } = this.props;
     if (tableData !== nextProps.tableData) {
       this.props.mapRows(nextProps.tableData || [], true);
     }
   }
+
   render() {
     const { classes, tableHead, tableRows, path, t, hideRowActions } = this.props;
     return (

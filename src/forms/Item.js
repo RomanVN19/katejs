@@ -1,4 +1,4 @@
-import { Elements } from 'kate-form-material-kit-react';
+import { Elements } from '../kate-form-material-kit-react';
 import Form from './Form';
 import { ConfirmDialog } from './Dialogs';
 import { getElement, getTableElement, makeTitle } from '../shared';

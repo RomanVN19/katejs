@@ -21,7 +21,7 @@ If not, see <https://www.gnu.org/licenses/>.
 */
 
 import React, { Fragment } from 'react';
-import { KateForm } from 'kate-form';
+import { KateForm } from '../kate-form';
 
 import CustomInput from 'material-kit-react-package/dist/components/CustomInput/CustomInput';
 import Button from 'material-kit-react-package/dist/components/CustomButtons/Button';
@@ -356,13 +356,19 @@ const tableResponsiveConnector = ({ columns, value, rowClick, cellStyle, t, head
 );
 
 
-const tabsConnector = ({ path, elements, setData, active, t }) => {
-  const setActiveTab = index => setData('active', index);
+const tabsConnector = ({ path, elements, setData, active, t, horizontal, onChange }) => {
+  const setActiveTab = (index) => {
+    setData('active', index);
+    if (onChange) {
+      onChange(index);
+    }
+  }
   return (
     <NavPills
       color="primary"
       activeTab={active || 0}
       setActiveTab={setActiveTab}
+      horizontal={horizontal}
       tabs={elements.map((item, index) => ({
         tabButton: t(item.title),
         tabIcon: item.icon,
