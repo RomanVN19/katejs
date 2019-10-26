@@ -23,7 +23,7 @@
 - Lots small fixies
 - changed files structure and export
 
-## 1.0.24 (26.19.2019)
+## 1.0.25 (26.19.2019)
 - tabs flex wrap + onTabChage 
 - user client allow true if no users
 - prevent data loose on sqlite dbsync
