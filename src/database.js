@@ -143,7 +143,8 @@ export default class Database {
     }
     this.Sequelize = Sequelize;
     this.entities = entities;
-    this.createModels(databaseParams.dialect === 'sqlite');
+    this.isSqlite = databaseParams.dialect === 'sqlite';
+    this.createModels();
   }
 
   async init() {
@@ -156,7 +157,7 @@ export default class Database {
     }
   }
 
-  createModels(isSqlite) {
+  createModels() {
     Object.keys(this.entities).forEach((entityName) => {
       const entity = this.entities[entityName];
       if (entity.structure && entity.structure.fields) {
@@ -171,7 +172,10 @@ export default class Database {
         entity.structure.tables.forEach((tableStructure) => {
           const table = {};
           entity[tables][tableStructure.name] = table;
-          const { params: tableParams, options: tableOptions } = getModelParams(table, tableStructure, true);
+          const {
+            params: tableParams,
+            options: tableOptions,
+          } = getModelParams(table, tableStructure, true);
           // eslint-disable-next-line no-param-reassign
           table[model] = this.sequelize.define(`${entityName.toLowerCase()}${capitalize(tableStructure.name)}`, tableParams, tableOptions);
           table[model].Name = `${entityName.toLowerCase()}${capitalize(tableStructure.name)}`;
@@ -179,10 +183,13 @@ export default class Database {
         });
       }
     });
-    makeAssociations(this.entities, this.logger, isSqlite);
+    makeAssociations(this.entities, this.logger, this.isSqlite);
   }
 
   async sync() {
+    if (this.isSqlite) {
+      await this.sequelize.query('PRAGMA foreign_keys = false;');
+    }
     await this.sequelize.sync({ alter: true });
   }
 }
