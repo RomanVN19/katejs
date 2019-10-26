@@ -22,3 +22,5 @@
 ===============
 19.10.2019
 - tabs flex wrap + onChage (up mkr 1.3.9)
+- user client allow true if no users
+- prevent data loose on sqlite dbsync

@@ -188,6 +188,7 @@ const AppClient = parent => class Client extends use(parent) {
   }
 
   allow(entity, method) {
+    if (this.skipAuthorization) return true;
     if (typeof entity === 'object') {
       return allowMethod({
         entity: entity.entity,
