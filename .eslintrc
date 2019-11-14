@@ -15,7 +15,9 @@
     "no-underscore-dangle": 0,
     "react/jsx-filename-extension": 0,
     "react/prop-types": 0,
-    "object-curly-newline": 0
+    "object-curly-newline": 0,
+    "linebreak-style": 0,
+    "lines-between-class-members": 0
   },
   "globals": {
     "window": true,
