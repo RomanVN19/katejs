@@ -6,7 +6,7 @@ export const showAlert = Symbol('showAlert');
 export default class Alerts extends Form {
   constructor(params) {
     super(params);
-    this.app.showAlert = this.showAlert;
+    this.app[showAlert] = this.showAlert;
     this.elements = [{
       id: 'alerts',
       type: Elements.LayoutAlerts,
