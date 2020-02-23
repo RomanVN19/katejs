@@ -23,7 +23,11 @@
 - Lots small fixies
 - changed files structure and export
 
-## 1.0.26 (26.19.2019)
+## 1.0.26 (26.10.2019)
 - tabs flex wrap + onTabChage 
 - user client allow true if no users
 - prevent data loose on sqlite dbsync
+
+## 1.1.0
+- fix checkbox normal/disabled labels font
+- updated dependencies
