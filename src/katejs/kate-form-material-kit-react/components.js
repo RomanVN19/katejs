@@ -257,7 +257,7 @@ const cardConnector = (allProps) => {
       )}
       <Card className="card-print-style">
         { actionsIndex > -1 && (
-          <CardHeader color="primary">
+          <CardHeader color="primary" className="card-header-print-style">
             <KateForm path={`${path}.elements.${actionsIndex}`} />
           </CardHeader>
         )}

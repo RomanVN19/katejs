@@ -1,6 +1,7 @@
 import { Elements, Form } from 'katejs/lib/client';
 
 export default class ExpenseReport extends Form {
+  static title = 'Отчет по расходам';
   constructor(args) {
     super(args);
     this.elements = [
