@@ -177,7 +177,7 @@ export default class Database {
         });
       }
     });
-    makeAssociations(this.entities, this.logger);
+    makeAssociations(this.entities, this.logger, this.isSqlite);
   }
 
   async sync() {

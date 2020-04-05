@@ -1,6 +1,6 @@
 import { Elements, Form } from 'katejs/lib/client';
 
-import { linkStyle } from './Auth';
+import { getLoader, linkStyle } from './Auth';
 
 const successText = 'Your account has been created.';
 
@@ -55,9 +55,10 @@ export default class Register extends Form {
         id: 'register',
         title: 'Register',
         type: Elements.BUTTON,
-        onClick: this.register,
+        onClick: () => this.register(),
         fullWidth: true,
       },
+      getLoader(),
     ];
     this.elements = [
       {
@@ -82,7 +83,8 @@ export default class Register extends Form {
               {
                 id: 'successText',
                 type: Elements.LABEL,
-                title: successText,
+                // eslint-disable-next-line max-len
+                title: (this.app.userRegistration && this.app.userRegistration.registrationText) || successText,
                 hidden: true,
               },
               {
@@ -97,6 +99,7 @@ export default class Register extends Form {
         ],
       },
     ];
+    this.app.setDrawer(false);
   }
   afterInit() {
     this.validate();
@@ -126,18 +129,23 @@ export default class Register extends Form {
     const valid = this.validateForm();
     this.content.register.disabled = !valid;
   }
-  register = async () => {
+  async register() {
+    this.content.register.hidden = true;
+    this.content.loading.hidden = false;
     const data = {
       ...this.getValues(),
+      url: `${window.location.protocol}//${window.location.host}${this.app.constructor.path}`,
     };
     const { error } = await this.app.User.register(data);
     if (error) {
       this.content.errorMessage.title = error.message;
       this.content.errorMessage.hidden = false;
-      return;
+    } else {
+      this.content.successText.hidden = false;
+      this.content.mainGroup.hidden = true;
     }
-    this.content.successText.hidden = false;
-    this.content.mainGroup.hidden = true;
+    this.content.register.hidden = false;
+    this.content.loading.hidden = true;
   }
   gotoAuth = () => {
     this.app.open('Auth');

@@ -30,3 +30,17 @@
 
 Структура `settingsParams` общая и для клиента и для сервера, 
 поэтому можно ее вынести в общий файл (например `structure.js`)
+
+
+Переопределение методов сущности `Settings` в `AppServer` следует выполнять в
+методое `beforeInit`
+````
+const AppServer = parent => class Server extends use(parent, AppService) {
+  ...
+
+  beforeInit() {
+    super.beforeInit();
+    this.entities.Settings = SettingsMixin(this.entities.Settings);
+  }
+}
+````

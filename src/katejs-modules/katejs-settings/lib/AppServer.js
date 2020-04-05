@@ -1,10 +1,9 @@
 import { use, makeEntitiesFromStructures } from 'katejs';
-import AppUser from '../../katejs-user/lib/AppServer';
 import { packageName, structures } from './structure';
 
 import SettingsMixin from './entities/SettingsMixin';
 
-const AppServer = parent => class Server extends use(parent, AppUser) {
+const AppServer = parent => class Server extends use(parent) {
   constructor(params) {
     super(params);
     makeEntitiesFromStructures(this.entities, structures);

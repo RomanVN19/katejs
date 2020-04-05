@@ -1,11 +1,10 @@
 import { use } from 'katejs/lib/client';
-import AppUser from '../../katejs-user/lib/AppClient';
 import { packageName } from './structure';
 import Settings from './forms/Settings';
 import icons from './icons';
 
 
-const AppClient = parent => class Client extends use(parent, AppUser) {
+const AppClient = parent => class Client extends use(parent) {
   constructor(args) {
     super(args);
     this.forms.Settings = Settings;

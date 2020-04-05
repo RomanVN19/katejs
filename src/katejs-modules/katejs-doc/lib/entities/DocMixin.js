@@ -10,7 +10,6 @@ const DocMixin = Entity => class DocEntity extends Entity {
   }
   async put(params) {
     // TODO - own transaction;
-    const { date } = params.data.body;
     if (!params.data.body.number) {
       const { response: max } = await this.query({
         ctx: params.ctx,
@@ -27,15 +26,11 @@ const DocMixin = Entity => class DocEntity extends Entity {
       // eslint-disable-next-line no-param-reassign
       params.data.body.number = maxNumber + 1;
     }
-    // date can be missed. title set moved to beforePut
-    // const { number } = params.data.body;
-    // // eslint-disable-next-line no-param-reassign
-    // params.data.body.title = this.app.t`${this.app.t(this.constructor.docName)} №${number} from ${moment(date).format('DD.MM.YYYY HH:mm')}`;
     return super.put(params);
   }
   async beforePut({ savedEntity, body, transaction, ctx }) {
     if (super.beforePut) await super.beforePut({ savedEntity, body, transaction, ctx });
-    const date = body.date || savedEntity.date;
+    const date = body.date || (savedEntity && savedEntity.date) || new Date();
     const number = body.number || savedEntity.number;
     // eslint-disable-next-line no-param-reassign
     body.title = this.app.t`${this.app.t(this.constructor.docName)} №${number} from ${moment(date).format('DD.MM.YYYY HH:mm')}`;
@@ -47,8 +42,8 @@ const DocMixin = Entity => class DocEntity extends Entity {
     if (this.makeRecords && this.constructor.records) {
       const recordsRegs = this.constructor.records;
       const clearPromises = [];
-      recordsRegs.forEach(recordsReg =>
-        clearPromises.push(this.app[recordsReg][model].destroy({
+      recordsRegs.forEach(recordsReg => clearPromises
+        .push(this.app[recordsReg][model].destroy({
           where: { docUuid: doc.uuid },
           transaction,
         })));
@@ -75,8 +70,8 @@ const DocMixin = Entity => class DocEntity extends Entity {
     if (this.makeRecords && this.constructor.records) {
       const recordsRegs = this.constructor.records;
       const clearPromises = [];
-      recordsRegs.forEach(recordsReg =>
-        clearPromises.push(this.app[recordsReg][model].destroy({
+      recordsRegs.forEach(recordsReg => clearPromises
+        .push(this.app[recordsReg][model].destroy({
           where: { docUuid: data.uuid },
           transaction: t,
         })));

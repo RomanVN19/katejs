@@ -10,6 +10,19 @@ const errorStyle = {
   color: '#ff0000',
 };
 
+export const getLoader = (id = 'loading') => ({
+  id,
+  type: Elements.GROUP,
+  style: { textAlign: 'center' },
+  div: true,
+  hidden: true,
+  elements: [
+    {
+      type: Elements.LOADING,
+    },
+  ],
+});
+
 class Auth extends Form {
   constructor(sys) {
     super(sys);
@@ -116,9 +129,67 @@ class Auth extends Form {
       },
     ];
 
-    const { username, recovery } = sys.params;
+    const { username, recovery, code } = sys.params;
     this.recovery = recovery;
     this.username = username;
+    this.code = code;
+
+    const activateElements = [
+      {
+        id: 'caption',
+        type: Elements.LABEL,
+        tag: 'h3',
+        title: 'Account activation',
+        style: { textAlign: 'center' },
+      },
+      {
+        id: 'userActivate',
+        type: Elements.INPUT,
+        title: 'Account',
+        onChange: this.clearErrorsActivate,
+        error: false,
+        value: username,
+      },
+      {
+        id: 'codeActivate',
+        type: Elements.INPUT,
+        title: 'Activation code',
+        onChange: this.clearErrorsActivate,
+        error: false,
+        value: code,
+      },
+      {
+        id: 'errorMessageActivate',
+        type: Elements.LABEL,
+        title: '',
+        hidden: true,
+        style: errorStyle,
+      },
+      {
+        id: 'successMessageActivate',
+        type: Elements.LABEL,
+        title: 'Account has been activated! Now you can login into system.',
+        hidden: true,
+      },
+      {
+        id: 'activateButton',
+        type: Elements.BUTTON,
+        title: 'Activate',
+        fullWidth: true,
+        disabled: false,
+        hidden: false,
+        onClick: () => this.activate(),
+      },
+      getLoader('activateLoading'),
+      {
+        type: Elements.LABEL,
+        title: 'Go to authorization',
+        onClick: this.gotoAuth,
+        style: linkStyle,
+      },
+    ];
+
+
     const resetElements = [
       {
         id: 'caption',
@@ -206,6 +277,12 @@ class Auth extends Form {
                 elements: resetElements,
                 hidden: true,
               },
+              {
+                id: 'activate',
+                type: Elements.GROUP,
+                elements: activateElements,
+                hidden: true,
+              },
             ],
           },
         ],
@@ -214,6 +291,10 @@ class Auth extends Form {
 
     if (this.recovery) {
       this.elements.get('reset').hidden = false;
+      this.elements.get('auth').hidden = true;
+    }
+    if (this.code) {
+      this.elements.get('activate').hidden = false;
       this.elements.get('auth').hidden = true;
     }
     this.app.setDrawer(false);
@@ -262,6 +343,7 @@ class Auth extends Form {
     this.content.recovery.hidden = true;
     this.content.reset.hidden = true;
     this.content.auth.hidden = false;
+    this.content.activate.hidden = true;
   }
   recover = async () => {
     this.content.recover.disabled = true;
@@ -310,6 +392,33 @@ class Auth extends Form {
   }
   registration = () => {
     this.app.open('Registration');
+  }
+  async activate() {
+    this.content.activateButton.hidden = true;
+    this.content.activateLoading.hidden = false;
+
+    const result = await this.app.User.activate({
+      username: this.content.userActivate.value,
+      code: this.content.codeActivate.value,
+    });
+    if (result.error) {
+      this.content.errorMessageActivate.hidden = false;
+      this.content.errorMessageActivate.title = result.error.message;
+      this.content.activateButton.hidden = false;
+      this.content.activateLoading.hidden = true;
+    } else {
+      this.content.errorMessageActivate.hidden = true;
+      this.content.successMessageActivate.hidden = false;
+      this.content.activateButton.hidden = true;
+      this.content.activateLoading.hidden = true;
+      this.content.userActivate.hidden = true;
+      this.content.codeActivate.hidden = true;
+    }
+  }
+  afterInit() {
+    if (this.username && this.code) {
+      this.activate();
+    }
   }
 }
 

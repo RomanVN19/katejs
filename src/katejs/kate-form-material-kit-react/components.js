@@ -222,7 +222,7 @@ const groupConnector = ({ path, div, style, ...rest }) => (div ? (
     <KateForm path={`${path}.elements`} />
   </div>
 ) : (
-  <Fragment style={style}>
+  <Fragment>
     <KateForm path={`${path}.elements`} />
   </Fragment>
 ));
@@ -340,7 +340,7 @@ const tabsConnector = ({ path, elements, setData, active, t, horizontal, onChang
     if (onChange) {
       onChange(index);
     }
-  }
+  };
   return (
     <NavPills
       color="primary"

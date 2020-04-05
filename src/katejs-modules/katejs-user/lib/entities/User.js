@@ -119,13 +119,13 @@ class User extends Entity {
   }
 
   async put(params) {
-    // const { data: { body: { username }, uuid } } = params;
-    // if (!uuid) {
-    //   const { response: presetUsers } = await this.query({ data: { where: { username } } });
-    // }
-    // if (presetUsers.length) {
-    //   return { error: { message: 'User with this e-mail already exist', status: 400 } };
-    // }
+    const { data: { body: { username }, uuid } } = params;
+    if (!uuid) {
+      const { response: presetUsers } = await this.query({ data: { where: { username } } });
+      if (presetUsers.length) {
+        return { error: { message: 'User with this e-mail already exist', status: 400 } };
+      }
+    }
 
     if (params.data.body.password1) {
       const passwordHash = await this.constructor.getHash(params.data.body.password1, 10);
@@ -279,19 +279,21 @@ class User extends Entity {
     if (error) {
       return { error: { status: 400, message: 'Error while password reset!' } };
     }
-    return { response: { message: 'OK', passwordHash } };
+    return { response: { message: 'OK' } };
   }
 
   async query(params) {
     const result = await super.query(params);
     if (params && params.ctx && result.response) {
+      // eslint-disable-next-line max-len
       result.response = result.response.map(item => ({ ...item, passwordHash: undefined, tokens: undefined }));
     }
     return result;
   }
 
-  async register({ data }) {
+  async register({ data, returnMailParams }) {
     this.logger.info('trying register user with params', data);
+    const { url } = data;
     if (!this.app.userRegistrationRoleTitle) {
       return { error: { message: 'Registration role not defined', status: 400 } };
     }
@@ -303,6 +305,12 @@ class User extends Entity {
     if (!roles || !roles[0]) {
       return { error: { message: 'Registration role incorrect', status: 400 } };
     }
+    let inactive = false;
+    let code;
+    if (this.app.userActivation) {
+      inactive = true;
+      code = crypto.randomBytes(16).toString('hex');
+    }
     // check if user present
     const username = data.email.trim();
     const { error } = await this.put({
@@ -312,12 +320,26 @@ class User extends Entity {
           title: data.name,
           username,
           roles: [{ role: roles[0] }],
-          inactive: false, // no activation
+          inactive,
+          passwordRecovery: code,
         },
       },
     });
     if (error) {
       return { error };
+    }
+    if (code) {
+      const { title } = this.app.constructor;
+      const link = `${this.app.env.systemUrl || url}/main/A/none/Auth?code=${code}&username=${username}`;
+      if (returnMailParams) {
+        return { title, link };
+      }
+      await this.app.sendEmail({
+        to: username,
+        subject: this.app.mailMessages.activation.subject.replace('%title%', title),
+        body: this.app.mailMessages.activation.body
+          .replace('%title%', title).replace('%link%', link),
+      });
     }
     return { response: { message: 'OK' } };
   }
@@ -330,6 +352,31 @@ class User extends Entity {
       return this.put({ ctx, data: { uuid: ctx.state.user.uuid, body: data.profile } });
     }
     return this.get({ ctx, data: { uuid: ctx.state.user.uuid } });
+  }
+
+  async activate({ data }) {
+    const { username, code } = data;
+    if (!code) {
+      return { error: { status: 400, message: 'Empty activation code!' } };
+    }
+    const { response: users } = await this.query({ data: {
+      where: { username, passwordRecovery: code },
+    } });
+    if (!users.length) {
+      return { error: { status: 400, message: 'User does not exist or wrong activation code!' } };
+    }
+    const { error } = await this.put({
+      data: {
+        uuid: users[0].uuid,
+        body: {
+          inactive: false,
+        },
+      },
+    });
+    if (error) {
+      return { error: { status: 400, message: 'Error while activation!' } };
+    }
+    return { response: { message: 'OK' } };
   }
 }
 
