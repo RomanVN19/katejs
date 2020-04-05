@@ -340,7 +340,7 @@ const tabsConnector = ({ path, elements, setData, active, t, horizontal, onChang
     if (onChange) {
       onChange(index);
     }
-  }
+  };
   return (
     <NavPills
       color="primary"

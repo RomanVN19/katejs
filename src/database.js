@@ -89,7 +89,7 @@ const getModelParams = (entity, structure, rowNumber) => {
   return { params: modelParams, options: modelOptions };
 };
 
-const makeAssociations = (entities, logger, isSqlite = false) => {
+const makeAssociations = (entities, logger) => {
   Object.values(entities).forEach((entity) => {
     if (entity.structure && entity.structure.fields) {
       entity.structure.fields.forEach((field, index) => {

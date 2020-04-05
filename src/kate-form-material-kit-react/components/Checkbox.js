@@ -17,13 +17,13 @@ const CustomCheckbox = (props) => {
     <div className={`${classes.checkboxAndRadio} ${classes.checkboxAndRadioHorizontal}`}>
       <FormControlLabel
         control={
-          <Checkbox
+          (<Checkbox
             checked={value}
             checkedIcon={<Check className={classes.checkedIcon} />}
             icon={<Check className={classes.uncheckedIcon} />}
             classes={{ checked: classes.checked }}
             {...rest}
-          />
+          />)
         }
         classes={{ label: classes.label }}
         label={title}
