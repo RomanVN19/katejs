@@ -20,7 +20,7 @@ export default (Entity, params = {}) => class Settings extends Entity {
     });
   }
   async get({ ctx }) {
-    const { response: existingSettings } = await this.query({ ctx, data: { limit: 1, order: [['date', 'DESC']] } });
+    const { response: existingSettings } = await this.query({ ctx, data: { limit: 1 } });
     if (existingSettings && existingSettings[0]) {
       return { response: existingSettings[0] };
     }
