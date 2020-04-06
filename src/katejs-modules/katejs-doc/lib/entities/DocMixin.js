@@ -59,10 +59,6 @@ const DocMixin = Entity => class DocEntity extends Entity {
           ...record,
         }));
         promises.push(this.app[recordEntity].recordsPut({ records, transaction }));
-        // need to use put to process hooks like serviceAccount
-        // promises.push(this.app[recordEntity][model].bulkCreate(records, { transaction }));
-        // records.forEach(record => promises.push(this.app[recordEntity]
-        //   .put({ data: { body: record }, transaction, ctx })));
       });
       await Promise.all(promises);
     }
