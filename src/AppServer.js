@@ -4,6 +4,7 @@ import { structures, title, packageName, Settings } from './structure';
 
 import ExpenseMixin from './entities/ExpenseMixin';
 import IncomeMixin from './entities/IncomeMixin';
+import MoneyRecordMixin from './entities/MoneyRecordMixin';
 
 const AppServer = parent => class Server extends use(parent, AppDoc, AppUser, AppSettings) {
   static title = title;
@@ -18,6 +19,7 @@ const AppServer = parent => class Server extends use(parent, AppDoc, AppUser, Ap
       ...this.entities,
       Expense: ExpenseMixin(this.entities.Expense),
       Income: IncomeMixin(this.entities.Income),
+      MoneyRecord: MoneyRecordMixin(this.entities.MoneyRecord),
     };
     this.entities.MoneyRecord.record = true;
 

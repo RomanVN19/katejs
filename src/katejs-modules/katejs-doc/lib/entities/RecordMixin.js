@@ -1,4 +1,5 @@
 import Fields from 'katejs/lib/fields';
+import { model } from 'katejs';
 import { structures } from '../structure';
 
 const RecordMixin = Entity => class RecordEntity extends Entity {
@@ -14,6 +15,12 @@ const RecordMixin = Entity => class RecordEntity extends Entity {
   }
   async put(params) {
     return super.put(params);
+  }
+  async recordsPut({ records, transaction }) {
+    if (this.beforeRecordsPut) {
+      await this.beforeRecordsPut({ records, transaction });
+    }
+    return this[model].bulkCreate(records, { transaction });
   }
   async balance({ data: { date, where: whereParams }, ctx }) {
     const where = {};
