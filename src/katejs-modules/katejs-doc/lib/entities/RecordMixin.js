@@ -16,13 +16,13 @@ const RecordMixin = Entity => class RecordEntity extends Entity {
   async put(params) {
     return super.put(params);
   }
-  async recordsPut({ records, transaction }) {
+  async recordsPut({ records, transaction, ctx }) {
     if (this.beforeRecordsPut) {
-      await this.beforeRecordsPut({ records, transaction });
+      await this.beforeRecordsPut({ records, transaction, ctx });
     }
     const result = await this[model].bulkCreate(records, { transaction });
     if (this.afterRecordsPut) { // my wife Kate helps me wrote this line
-      await this.afterRecordsPut({ records, transaction });
+      await this.afterRecordsPut({ records, transaction, ctx });
     }
     return result;
   }

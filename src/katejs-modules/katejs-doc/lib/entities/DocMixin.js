@@ -58,7 +58,7 @@ const DocMixin = Entity => class DocEntity extends Entity {
           docTitle: doc.title,
           ...record,
         }));
-        promises.push(this.app[recordEntity].recordsPut({ records, transaction }));
+        promises.push(this.app[recordEntity].recordsPut({ records, transaction, ctx }));
       });
       await Promise.all(promises);
     }
