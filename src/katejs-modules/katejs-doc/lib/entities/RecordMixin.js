@@ -20,7 +20,11 @@ const RecordMixin = Entity => class RecordEntity extends Entity {
     if (this.beforeRecordsPut) {
       await this.beforeRecordsPut({ records, transaction });
     }
-    return this[model].bulkCreate(records, { transaction });
+    const result = await this[model].bulkCreate(records, { transaction });
+    if (this.afterRecordsPut) { // my wife Kate helps me wrote this line
+      await this.afterRecordsPut({ records, transaction });
+    }
+    return result;
   }
   async balance({ data: { date, where: whereParams }, ctx }) {
     const where = {};

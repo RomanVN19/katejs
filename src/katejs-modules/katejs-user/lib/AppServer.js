@@ -81,7 +81,6 @@ const AppServer = parent => class Server extends use(parent) {
     this.jwtSecret = jwtSecret;
     this.httpMidlewares.push(jwt({ secret: jwtSecret, passthrough: true }));
     this.router = new Router();
-    console.log('api url', apiUrl);
     this.router.post(apiUrl, this.accessControl);
     this.httpMidlewares.push(this.router.routes());
   }
