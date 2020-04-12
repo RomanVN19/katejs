@@ -26,7 +26,7 @@ const RecordMixin = Entity => class RecordEntity extends Entity {
     }
     return result;
   }
-  async balance({ data: { date, where: whereParams }, ctx }) {
+  async balance({ data: { date, where: whereParams }, ctx, transaction }) {
     const where = {};
     if (date) {
       where.date = { $lte: date };
@@ -51,6 +51,7 @@ const RecordMixin = Entity => class RecordEntity extends Entity {
         limit: -1,
       },
       ctx,
+      transaction,
     });
   }
   async turnover(params) {
