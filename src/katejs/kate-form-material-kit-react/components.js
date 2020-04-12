@@ -290,19 +290,6 @@ const cardActionsConnector = ({ path, elements }) => (
   </div>
 );
 
-const tableConnector = ({ columns, value, rowClick, cellStyle, t, headStyle, ...rest }) => (
-  <TablePlain
-    tableHeaderColor="primary"
-    tableHead={columns}
-    tableData={value || []}
-    rowClick={rowClick}
-    cellStyle={cellStyle}
-    headStyle={headStyle}
-    t={t}
-    {...rest}
-  />
-);
-
 const tableEditableConnector = ({ columns, value, path, t,
   setData, rows, rowChange, getRow, onDelete, hideRowActions, rowClick }) => (
     <TableEditable
@@ -321,7 +308,7 @@ const tableEditableConnector = ({ columns, value, path, t,
     />
 );
 
-const tableResponsiveConnector = ({ columns, value, rowClick, cellStyle, t, headStyle }) => (
+const tableResponsiveConnector = ({ columns, value, rowClick, cellStyle, t, headStyle, ...rest }) => (
   <TableResponsive
     tableHeaderColor="primary"
     tableHead={columns}
@@ -330,6 +317,7 @@ const tableResponsiveConnector = ({ columns, value, rowClick, cellStyle, t, head
     cellStyle={cellStyle}
     headStyle={headStyle}
     t={t}
+    {...rest}
   />
 );
 
@@ -457,7 +445,6 @@ const components = {
   [Elements.SWITCH]: switchConnector,
   [Elements.CHECKBOX]: checkboxConnector,
 
-  [Elements.TABLE]: tableConnector,
   [Elements.TABLE]: tableResponsiveConnector, // replace with responsive
   [Elements.TABLE_EDITABLE]: tableEditableConnector,
   [Elements.TABLE_RESPONSIVE]: tableResponsiveConnector,

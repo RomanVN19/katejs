@@ -6,8 +6,27 @@ export default class TestForm extends Form {
     this.elements = [
       {
         type: Elements.LABEL,
-        title: `Company name settings ${this.app.settings.companyName}`,
-      }
+        title: 'Test form',
+      },
+      {
+        type: Elements.TABLE,
+        style: { maxHeight: 200, overflowY: 'scroll' },
+        columns: [
+          {
+            title: 'Test',
+            dataPath: 'test',
+          },
+        ],
+        value: [
+          { test: 123 },
+          { test: 123 },
+          { test: 123 },
+          { test: 123 },
+          { test: 123 },
+          { test: 123 },
+          { test: 123 },
+        ],
+      },
     ];
   }
 }

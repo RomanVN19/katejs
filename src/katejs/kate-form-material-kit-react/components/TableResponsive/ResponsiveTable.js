@@ -47,10 +47,11 @@ class ResponsiveTable extends Component {
       enableShouldComponentUpdate,
       rowClick,
       cellStyle,
+      style,
     } = this.props;
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} style={style}>
         {/* DESKTOP BIG TABLE */}
 
         <Hidden only={tableBreakpoints || ['xs', 'sm', 'md']} implementation={implementation || 'js'}>
