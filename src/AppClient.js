@@ -10,6 +10,7 @@ import ExpenseItemMixin from './forms/ExpenseItemMixin';
 import ExpenseReport from './forms/ExpenseReport';
 import MoneyReport from './forms/MoneyReport';
 import TestForm from './forms/TestForm';
+import icons from './icons';
 
 const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, AppSettings) {
   static title = title;
@@ -51,6 +52,53 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
     this.saveAuth = true;
 
     this.settingsParams = Settings;
+
+    this.menu.unshift(
+      {
+        title: 'Reports',
+        icon: icons.OrderDynamics,
+        submenu: [
+          {
+            form: 'ProductSalesReport',
+            title: 'Product sales',
+          },
+          {
+            form: 'OrdersToDeliverReport',
+            title: 'Orders to deliver',
+          },
+          {
+            form: 'CashFlow',
+            title: 'Cash flow',
+          },
+          {
+            form: 'OrderDynamics',
+            title: 'Order dynamics',
+          },
+          {
+            form: 'ProductFlowReport',
+            title: 'Product flow',
+          },
+          {
+            form: 'DebtFlowReport',
+            title: 'Взаиморасчеты',
+          },
+        ],
+      },
+    );
+    this.menu.forEach((item) => {
+      if (icons[item.form]) {
+        // eslint-disable-next-line no-param-reassign
+        item.icon = icons[item.form];
+      }
+      if (item.submenu) {
+        item.submenu.forEach((sitem) => {
+          if (icons[sitem.form]) {
+            // eslint-disable-next-line no-param-reassign
+            sitem.icon = icons[sitem.form];
+          }
+        });
+      }
+    });
   }
 };
 AppClient.package = packageName;
