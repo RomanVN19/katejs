@@ -87,7 +87,7 @@ class Submenu extends React.Component {
                 <ListItemIcon className={classes.icon}>
                   {subroute.icon ? <subroute.icon /> : <DocIcon />}
                 </ListItemIcon>
-                <ListItemText primary={t(subroute.title)} />
+                <ListItemText classes={{ primary: classes.listItemNestedText }} primary={t(subroute.title)} />
               </ListItem>
             ))
           }
