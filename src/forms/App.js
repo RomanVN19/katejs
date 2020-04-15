@@ -6,6 +6,7 @@ Copyright © 2018 Roman Nep <neproman@gmail.com>
 import ProxyPolyfill from 'proxy-polyfill/src/proxy';
 import { App } from '../kate-client';
 import { Layout, components } from '../kate-form-material-kit-react';
+import '../kate-form-material-kit-react/styles.css';
 
 import makeItemForm from './Item';
 import makeListForm from './List';

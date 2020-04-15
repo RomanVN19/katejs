@@ -7,3 +7,10 @@
 Фреймворк разработки бизнес приложений.
 
 [Документация](https://katejs.ru)
+
+## Сборка
+````
+npm run build-client
+npm run build-server
+npm run build-shared
+````

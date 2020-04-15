@@ -1,0 +1,9 @@
+@media print {
+    .card-print-style {
+        margin: 0!important;
+        box-shadow: none!important;
+    }
+    .card-header-print-style {
+        display: none;
+    }
+}
