@@ -123,7 +123,9 @@ const styles = theme => ({
     width: '100%',
     marginLeft: '0',
     marginRight: '0',
-    wordBreak: 'break-all',
+  },
+  listItemNestedText: {
+    fontSize: '0.8em',
   },
   loadingBlock: {
     width: '100%',

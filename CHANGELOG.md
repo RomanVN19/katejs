@@ -32,6 +32,6 @@
 - fix checkbox normal/disabled labels font
 - updated dependencies
 
-## 1.1.1
+## 1.1.2
 - print styles
 - submenu icons fix
