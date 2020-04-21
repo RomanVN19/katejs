@@ -217,7 +217,7 @@ const selectConnector = (allProps) => {
   );
 };
 
-const groupConnector = ({ path, div, style, ...rest }) => (div ? (
+const groupConnector = ({ path, div, style, t, ...rest }) => (div ? (
   <div {...rest} style={style}>
     <KateForm path={`${path}.elements`} />
   </div>

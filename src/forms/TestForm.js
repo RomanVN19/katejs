@@ -5,8 +5,14 @@ export default class TestForm extends Form {
     super(args);
     this.elements = [
       {
-        type: Elements.LABEL,
-        title: 'Test form',
+        type: Elements.GROUP,
+        div: true,
+        elements: [
+          {
+            type: Elements.LABEL,
+            title: 'Test form',
+          },
+        ],
       },
       {
         type: Elements.TABLE,
