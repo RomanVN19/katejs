@@ -14,6 +14,7 @@ export default Entity => class Expense extends Entity {
 
   // eslint-disable-next-line class-methods-use-this
   makeRecords(doc) {
+    if (!doc.total) return {};
     return {
       MoneyRecord: [{
         wallet: doc.wallet,
