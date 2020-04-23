@@ -10,7 +10,5 @@
 
 ## Сборка
 ````
-npm run build-client
-npm run build-server
-npm run build-shared
+npm run build
 ````

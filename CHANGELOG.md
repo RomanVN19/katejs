@@ -35,3 +35,6 @@
 ## 1.1.2
 - print styles
 - submenu icons fix
+
+## 1.1.3
+- return on same page in lists

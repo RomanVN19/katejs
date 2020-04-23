@@ -4,7 +4,7 @@ Copyright © 2018 Roman Nep <neproman@gmail.com>
 import KateClient from './kate-client';
 import { Elements } from './kate-form-material-kit-react';
 import Form from './forms/Form';
-import App from './forms/App';
+import App, { FormsFilters } from './forms/App';
 import { ConfirmDialog } from './forms/Dialogs';
 import makeItemForm from './forms/Item';
 import makeListForm from './forms/List';
@@ -41,6 +41,7 @@ const ListForm = (entity, { addActions = false, addElements = false } = {}) => {
 
 export {
   App,
+  FormsFilters,
   Form,
   Elements,
   makeItemForm,

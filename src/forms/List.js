@@ -15,6 +15,8 @@ const fieldForList = (field) => {
   return true;
 };
 
+export const FormsFilters = Symbol('FormsFilters');
+
 const makeListForm = ({ structure, name, addActions = true, addElements = true }) =>
   class ListForm extends Form {
     static title = makeTitlePlural(name)
@@ -63,18 +65,28 @@ const makeListForm = ({ structure, name, addActions = true, addElements = true }
       setTimeout(() => this.load(), 0); // to process filter from childs
     }
     async load({ page = 1, limit } = {}) {
+      console.log('L=', this.app[FormsFilters][`${name}List`]);
+      const formFilters = this.app[FormsFilters][`${name}List`] || {};
+      const currentPage = formFilters.currentPage || page;
+      if (formFilters.currentPage) {
+        delete formFilters.currentPage;
+        this.app[FormsFilters][`${name}List`] = formFilters;
+      }
       const result = await this.app[name]
-        .query({ where: this.filters, order: this.order, page, limit });
+        .query({ where: this.filters, order: this.order, page: currentPage, limit });
       this.content.list.value = result.response;
       if (this.app.paginationLimit && result.response) {
-        this.content.pagination.page = page;
+        this.content.pagination.page = currentPage;
         if (this.app.paginationLimit <= result.response.length) {
           if (this.content.pagination.hidden) {
             this.content.pagination.hidden = false;
           }
           this.content.pagination.max = 0;
         } else {
-          this.content.pagination.max = page;
+          if (currentPage > 1 && this.content.pagination.hidden) {
+            this.content.pagination.hidden = false;
+          }
+          this.content.pagination.max = currentPage;
         }
       }
       if (result.error) {
@@ -90,6 +102,10 @@ const makeListForm = ({ structure, name, addActions = true, addElements = true }
       this.app.open(`${name}Item`, { id: 'new' });
     }
     [open] = (row) => {
+      const filters = this.app[FormsFilters][`${name}List`] || {};
+      filters.currentPage = this.content.pagination.page;
+      this.app[FormsFilters][`${name}List`] = filters;
+      console.log('F=', this.app[FormsFilters][`${name}List`]);
       this.app.open(`${name}Item`, { id: row.uuid });
     }
   };

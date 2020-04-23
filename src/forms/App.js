@@ -1,4 +1,3 @@
-
 /*
 Copyright © 2018 Roman Nep <neproman@gmail.com>
 */
@@ -9,10 +8,11 @@ import { Layout, components } from '../kate-form-material-kit-react';
 import '../kate-form-material-kit-react/styles.css';
 
 import makeItemForm from './Item';
-import makeListForm from './List';
+import makeListForm, { FormsFilters } from './List';
 
 import Menu, { menuForm } from './Menu';
 import Alerts, { showAlert } from './Alerts';
+
 
 const ProxyP = ProxyPolyfill();
 
@@ -65,6 +65,8 @@ export default class PlatformApp extends App {
     this.loading = false;
 
     this.entityMethods = {}; // for Proxy polyfill
+
+    this[FormsFilters] = {};
   }
   setDrawer(drawerOpen) {
     this.drawerOpen = drawerOpen;
@@ -155,3 +157,7 @@ export default class PlatformApp extends App {
     });
   }
 }
+
+export {
+  FormsFilters,
+};
