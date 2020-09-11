@@ -86,6 +86,12 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
       },
     );
     this.menu.forEach((item) => {
+      if (item.form === 'UserList') {
+        item.rule = {
+          entity: 'User',
+          method: 'put',
+        };
+      }
       if (icons[item.form]) {
         // eslint-disable-next-line no-param-reassign
         item.icon = icons[item.form];

@@ -131,6 +131,7 @@ const AppClient = parent => class Client extends use(parent) {
     this.user = user;
     this.userRoles = roles;
     this.userRolesProps = rolesProps;
+    this.skipAuthorization = false;
 
     const profileItem = this.menu.find(item => item.form === 'Profile');
     if (!profileItem) {
