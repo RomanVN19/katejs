@@ -38,3 +38,6 @@
 
 ## 1.1.3
 - return on same page in lists
+
+## 1.1.4
+- rm console, up desc
