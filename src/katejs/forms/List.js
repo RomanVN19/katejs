@@ -65,7 +65,6 @@ const makeListForm = ({ structure, name, addActions = true, addElements = true }
       setTimeout(() => this.load(), 0); // to process filter from childs
     }
     async load({ page = 1, limit } = {}) {
-      console.log('L=', this.app[FormsFilters][`${name}List`]);
       const formFilters = this.app[FormsFilters][`${name}List`] || {};
       const currentPage = formFilters.currentPage || page;
       if (formFilters.currentPage) {
