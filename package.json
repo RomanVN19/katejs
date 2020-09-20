@@ -14,6 +14,7 @@
     "build-client": "webpack --config webpack.client.js --progress --profile --bail",
     "build-server": "webpack --config webpack.server.js --progress --profile --bail"
   },
+  "license": "AGPL-3.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/romannep/katejs.git"
