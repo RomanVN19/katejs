@@ -6,7 +6,7 @@ export default (Entity, params = {}) => class Settings extends Entity {
   }
   async set({ ctx, data }) {
     let uuid;
-    const { response: existingSettings } = await this.query({ ctx, data: { limit: 1, order: [['date', 'DESC']] } });
+    const { response: existingSettings } = await this.query({ ctx, data: { limit: 1 } });
     if (existingSettings && existingSettings[0]) {
       // eslint-disable-next-line prefer-destructuring
       uuid = existingSettings[0].uuid;
