@@ -22,7 +22,7 @@ import Form from './classes/Form';
 
 const KateClient = ({ app, translations, pwa }) => {
   const history = createBrowserHistory();
-  const store = configureStore();
+  const store = configureStore(undefined, app.useLogger);
 
   ReactDOM.render(
     <Provider store={store}>

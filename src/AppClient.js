@@ -14,6 +14,7 @@ import icons from './icons';
 
 const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, AppSettings) {
   static title = title;
+  static useLogger = true;
 
   constructor(params) {
     super(params);
