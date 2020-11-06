@@ -68,6 +68,27 @@ const AppClient = parent => class Client extends use(parent) {
     }
   }
 
+  async renewToken() {
+    if (this.renewTokenPromise) {
+      await this.renewTokenPromise;
+      this.renewTokenPromise = undefined;
+      return;
+    }
+    this.renewTokenPromise = new Promise(async (resolve) => {
+      const newTokenResponse = await this.User.renew({
+        uuid: this.user.uuid,
+        token: this.authorization,
+        device: this.authorizationDevice,
+      });
+      if (newTokenResponse.response) {
+        this.successAuth({ ...newTokenResponse.response, skipRedirect: true });
+      } else {
+        this.logout();
+      }
+      resolve();
+    });
+  }
+
   async request(url, params, handlers) {
     if (this.authorization) {
       const requestParams = {
@@ -78,19 +99,12 @@ const AppClient = parent => class Client extends use(parent) {
       };
       const result = await super.request(url, requestParams, handlers);
       if (result.error && result.errorResponse && result.errorResponse.status === 401 && !url.endsWith('/User/renew')) {
-        // need renew token
-        const newTokenResponse = await this.User.renew({
-          uuid: this.user.uuid,
-          token: this.authorization,
-          device: this.authorizationDevice,
-        });
-        // console.log('got new token', newTokenResponse);
-        if (newTokenResponse.response) {
-          this.successAuth({ ...newTokenResponse.response, skipRedirect: true });
+        await this.renewToken();
+        if (this.authorization) {
           return this.request(url, requestParams, handlers);
+        } else {
+          return { error: { message: 'token not valid' } };
         }
-        this.logout();
-        return { error: { message: 'token not valid' } };
       }
       return result;
     }
@@ -98,7 +112,7 @@ const AppClient = parent => class Client extends use(parent) {
   }
 
   async afterInit() {
-    if (super.afterInit) super.afterInit();
+    if (super.afterInit) await super.afterInit();
     this.checkSavedAuth();
     if (!this.authorization && !this.skipAuthorization) {
       const { response } = await this.User.needAuthorization();
@@ -123,7 +137,7 @@ const AppClient = parent => class Client extends use(parent) {
     this.open('none', null, 'leftMenu');
     this.open('Auth');
     localStorage.removeItem(`${packageName}-auth`);
-  }
+  };
 
   successAuth({ token, user, roles, rolesProps, skipRedirect, device }) {
     this.authorization = token;

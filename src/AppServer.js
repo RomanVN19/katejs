@@ -24,6 +24,9 @@ const AppServer = parent => class Server extends use(parent, AppDoc, AppUser, Ap
     this.entities.MoneyRecord.record = true;
 
     this.settingsParams = Settings;
+
+    // test tokens renew
+    // this.jwtExpires = 60;
   }
 };
 AppServer.package = packageName;
