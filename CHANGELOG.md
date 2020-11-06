@@ -41,3 +41,7 @@
 
 ## 1.1.4
 - rm console, up desc
+
+# 1.1.5
+- client app await afterInit
+- client app use redux logger

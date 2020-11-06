@@ -14,7 +14,7 @@ class KateComponent extends Component {
       path: App.path || '/',
       translations,
     });
-    this.state = { layouts: [] };
+    this.state = { layouts: [], initialized: false };
     const path = match.path === '/' ? '' : match.path;
 
     Object.keys(this.APP.layouts).forEach((layoutName) => {
@@ -34,14 +34,12 @@ class KateComponent extends Component {
       const l = this.APP.defaultLayout;
       this.state.defaultRedirect = this.APP.getPath(l.layout, l.areas, l.params);
     }
-    if (this.APP.afterInit) this.APP.afterInit();
-    // setTimeout(this.afterInitCall, 0);
+    this.callAfterInit();
   }
-  // eslint-disable-next-line react/sort-comp
-  // afterInitCall = () => {
-  //   if (this.APP.afterInit) this.APP.afterInit();
-  // }
-
+  async callAfterInit() {
+    if (this.APP.afterInit) await this.APP.afterInit();
+    this.setState({ initialized: true });
+  }
   getLayoutRender(layout) {
     const LayoutComponent = layout.component;
     const { forms } = this.APP;
@@ -94,7 +92,10 @@ class KateComponent extends Component {
   }
   render() {
     const { app } = this.props;
-    const { layouts, defaultRedirect } = this.state;
+    const { layouts, defaultRedirect, initialized } = this.state;
+    if (!initialized) {
+      return (<div>loading...</div>)
+    }
     return (
       <KateFormProvider components={app.components} t={this.APP.t} logRerender={app.logRerender} >
         <Switch>
