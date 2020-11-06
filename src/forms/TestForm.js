@@ -34,5 +34,7 @@ export default class TestForm extends Form {
         ],
       },
     ];
+
+    console.log('app form constr', !!this.app.authorization, this.app.allow('Expense', 'put'));
   }
 }
