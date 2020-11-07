@@ -107,6 +107,14 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
       }
     });
   }
+  async afterInit() { // test open with link
+    await super.afterInit();
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 500);
+    });
+  }
 };
 AppClient.package = packageName;
 export default AppClient;
