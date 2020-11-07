@@ -10,6 +10,7 @@ export default ItemForm => class ExpenseItem extends ItemForm {
     const sumCol = table.columns.find(col => col.id === 'sum');
     sumCol.onChange = () => this.calcTotal();
     table.onDelete = () => this.calcTotal();
+    console.log('mixin constr');
   }
 
   calcTotal() {

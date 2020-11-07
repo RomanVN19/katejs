@@ -14,7 +14,7 @@ import icons from './icons';
 
 const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, AppSettings) {
   static title = title;
-  static useLogger = true;
+  static useLogger = false;
 
   constructor(params) {
     super(params);
@@ -25,7 +25,6 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
       ...this.forms,
       IncomeItem: IncomeFormMixin(this.forms.IncomeItem),
       IncomeReport,
-      ExpenseItem: ExpenseItemMixin(this.forms.ExpenseItem),
       ExpenseReport,
       MoneyReport,
       TestForm,
@@ -114,6 +113,7 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
         resolve();
       }, 500);
     });
+    this.forms.ExpenseItem = ExpenseItemMixin(this.forms.ExpenseItem); // test mixin after init
   }
 };
 AppClient.package = packageName;
