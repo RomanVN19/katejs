@@ -109,12 +109,12 @@ const makeItemForm = ({ structure, name, addActions = true, addElements = true }
       }
     }
     [close] = () => {
-      this.app.open(`${name}List`);
-    }
+      this.app.open(`${name}List`, {});
+    };
     [ok] = async () => {
       await this.save();
       this[close]();
-    }
+    };
     [load] = () => this.load();
     [save] = () => this.save();
     [del] = () => this.delete();

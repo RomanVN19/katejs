@@ -12,7 +12,7 @@ export default class App {
     this[terms] = this.translations && this.translations[this.translations.languages[0]];
     this[currentForms] = {};
   }
-  getPath(layoutName, formsToOpen = {}, params = {}) {
+  getPath(layoutName, formsToOpen = {}, params) {
     const path = `${this[appPath] === '/' ? '' : this[appPath]}/${layoutName}`;
     const layout = this.layouts[layoutName];
     const forms = { ...this[currentForms], ...formsToOpen };
@@ -23,7 +23,9 @@ export default class App {
     } else {
       paths = `/${forms.content || 'none'}`;
     }
-    const paramsString = params && Object.keys(params).map(paramName => `${paramName}=${params[paramName]}`).join('&');
+    const newSearch = params && Object.keys(params).map(paramName => `${paramName}=${params[paramName]}`).join('&');
+    const existingSearch = forms.search ? forms.search.slice(1) : '';
+    const paramsString = params ? newSearch : existingSearch;
     this[currentLayout] = layoutName;
     this[currentForms] = forms;
     return `${path}${paths}${paramsString ? `?${paramsString}` : ''}`;
@@ -34,7 +36,7 @@ export default class App {
   getLayout() {
     return { layout: this[currentLayout], forms: this[currentForms] };
   }
-  open(form, params = {}, area) {
+  open(form, params, area) {
     if (this[currentLayout]) {
       const areas = this.layouts[this[currentLayout]].areas || {};
       const areaName = area ||
@@ -58,7 +60,7 @@ export default class App {
     result.push((this[terms] && this[terms][strings[strings.length - 1]])
       || strings[strings.length - 1]);
     return result.join('');
-  }
+  };
   /* global FormData */
   // eslint-disable-next-line class-methods-use-this
   async request(url, params = {}, handlers = {}) {
