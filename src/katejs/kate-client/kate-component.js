@@ -90,7 +90,7 @@ class KateComponent extends Component {
       this.APP[currentForms].search = search;
       const { initialized } = this.state;
       if (!initialized) {
-        return (<div>loading...</div>)
+        return (<div></div>) // TODO: pretty loading message
       } else {
         return <LayoutComponent content={content} app={this.APP} />;
       }
