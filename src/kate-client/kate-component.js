@@ -88,15 +88,17 @@ class KateComponent extends Component {
       // eslint-disable-next-line no-param-reassign
       layout.memo = { content, params };
       this.APP[currentForms].search = search;
-      return <LayoutComponent content={content} app={this.APP} />;
+      const { initialized } = this.state;
+      if (!initialized) {
+        return (<div>loading...</div>)
+      } else {
+        return <LayoutComponent content={content} app={this.APP} />;
+      }
     };
   }
   render() {
     const { app } = this.props;
     const { layouts, defaultRedirect, initialized } = this.state;
-    if (!initialized) {
-      return (<div>loading...</div>)
-    }
     return (
       <KateFormProvider components={app.components} t={this.APP.t} logRerender={app.logRerender} >
         <Switch>
