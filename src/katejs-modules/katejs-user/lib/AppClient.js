@@ -124,7 +124,7 @@ const AppClient = parent => class Client extends use(parent) {
         // this.open('none', null, 'leftMenu');
         this.open('Auth');
       } else {
-        this.open('M', {}, 'leftMenu');
+        this.open('M', undefined, 'leftMenu');
         this.setMenuParent(this.menu);
       }
     }
@@ -134,7 +134,7 @@ const AppClient = parent => class Client extends use(parent) {
     this.authorization = undefined;
     this.user = undefined;
     this.userRoles = undefined;
-    this.open('none', null, 'leftMenu');
+    this.open('none', undefined, 'leftMenu');
     this.open('Auth');
     localStorage.removeItem(`${packageName}-auth`);
   };
@@ -184,7 +184,7 @@ const AppClient = parent => class Client extends use(parent) {
     const { forms } = this.getLayout();
     if (forms.leftMenu !== 'M') {
       setTimeout(() => {
-        this.open('M', {}, 'leftMenu');
+        this.open('M', undefined, 'leftMenu');
         this.setMenu(this.menu, topElements);
       }, 0);
     }

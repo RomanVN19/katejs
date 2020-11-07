@@ -46,7 +46,7 @@ class KateComponent extends Component {
 
     return (props) => {
       this.APP[currentLayout] = layout.name;
-      const { match: { params } } = props;
+      const { match: { params }, location: { search } } = props;
       let content;
       if (layout.areas) {
         content = {};
@@ -87,6 +87,7 @@ class KateComponent extends Component {
       }
       // eslint-disable-next-line no-param-reassign
       layout.memo = { content, params };
+      this.APP[currentForms].search = search;
       return <LayoutComponent content={content} app={this.APP} />;
     };
   }

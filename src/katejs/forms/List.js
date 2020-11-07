@@ -96,15 +96,14 @@ const makeListForm = ({ structure, name, addActions = true, addElements = true }
     }
     [pageChange] = (page) => {
       this.load({ page });
-    }
+    };
     [add] = () => {
       this.app.open(`${name}Item`, { id: 'new' });
-    }
+    };
     [open] = (row) => {
       const filters = this.app[FormsFilters][`${name}List`] || {};
       filters.currentPage = this.content.pagination.page;
       this.app[FormsFilters][`${name}List`] = filters;
-      console.log('F=', this.app[FormsFilters][`${name}List`]);
       this.app.open(`${name}Item`, { id: row.uuid });
     }
   };

@@ -31,7 +31,7 @@ export default class Menu extends Form {
       item.onClick();
       return;
     }
-    this.app.open(item.form);
+    this.app.open(item.form, {});
     this.content.menu.elements = this.content.menu.elements
       .map(menuItem => ({
         ...menuItem,
