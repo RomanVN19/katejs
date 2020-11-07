@@ -37,7 +37,7 @@ const DocMixin = Entity => class DocEntity extends Entity {
   }
   async afterPut({ entity: doc, transaction, ctx }) {
     if (super.afterPut) {
-      await super.afterPut(doc, transaction);
+      await super.afterPut({ entity: doc, transaction, ctx });
     }
     if (this.makeRecords && this.constructor.records) {
       const recordsRegs = this.constructor.records;
