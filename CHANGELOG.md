@@ -42,7 +42,7 @@
 ## 1.1.4
 - rm console, up desc
 
-# 1.1.7
+# 1.1.8
 - client app await afterInit
 - client app use redux logger
 - keep search on refresh

@@ -48,6 +48,7 @@ class KateComponent extends Component {
       this.APP[currentLayout] = layout.name;
       const { match: { params }, location: { search } } = props;
       let content;
+      const { initialized } = this.state;
       if (layout.areas) {
         content = {};
         const contentMemo = layout.memo || { params: {} };
@@ -57,14 +58,16 @@ class KateComponent extends Component {
             if (contentMemo.params[areaName] === params[areaName]) {
               content[areaName] = contentMemo.content[areaName];
             } else {
-              const ClientForm = KateClientForm(`${areaName}-${params[areaName]}`);
-              content[areaName] = (
-                <ClientForm
-                  Form={forms[params[areaName]]}
-                  app={this.APP}
-                  {...props}
-                />
-              );
+              if (initialized) {
+                const ClientForm = KateClientForm(`${areaName}-${params[areaName]}`);
+                content[areaName] = (
+                  <ClientForm
+                    Form={forms[params[areaName]]}
+                    app={this.APP}
+                    {...props}
+                  />
+                );
+              }
             }
           } else if (params[areaName] === 'none') {
             content[areaName] = null;
@@ -73,25 +76,26 @@ class KateComponent extends Component {
           }
         });
       } else if (forms[params.content]) {
-        const ClientForm = KateClientForm(`content-${params.content}`);
-        content = (
-          <ClientForm
-            Form={forms[params.content]}
-            app={this.APP}
-            {...props}
-          />
-        );
+        if (initialized) {
+          const ClientForm = KateClientForm(`content-${params.content}`);
+          content = (
+            <ClientForm
+              Form={forms[params.content]}
+              app={this.APP}
+              {...props}
+            />
+          );
+        }
       } else {
         // eslint-disable-next-line prefer-destructuring
         content = params.content;
       }
-      // eslint-disable-next-line no-param-reassign
-      layout.memo = { content, params };
       this.APP[currentForms].search = search;
-      const { initialized } = this.state;
       if (!initialized) {
         return (<div></div>) // TODO: pretty loading message
       } else {
+        // eslint-disable-next-line no-param-reassign
+        layout.memo = { content, params };
         return <LayoutComponent content={content} app={this.APP} />;
       }
     };
