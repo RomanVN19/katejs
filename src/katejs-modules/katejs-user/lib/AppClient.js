@@ -61,7 +61,7 @@ const AppClient = parent => class Client extends use(parent) {
     if (auth) {
       try {
         const { token, user, roles, rolesProps } = JSON.parse(auth);
-        this.successAuth({ token, user, roles, rolesProps, device, skipRedirect: true });
+        this.successAuth({ token, user, roles, rolesProps, device, skipRedirect: true, skipAfterInitCall: true });
       } catch (error) {
         this.showAlert({ type: 'warning', title: JSON.stringify(error) });
       }
@@ -114,6 +114,7 @@ const AppClient = parent => class Client extends use(parent) {
   async afterInit() {
     if (super.afterInit) await super.afterInit();
     this.checkSavedAuth();
+    if (this.afterUserInit && this.authorization) await this.afterUserInit();
     if (!this.authorization && !this.skipAuthorization) {
       const { response } = await this.User.needAuthorization();
       // check again - flag can be changed by some form contructor
@@ -139,7 +140,7 @@ const AppClient = parent => class Client extends use(parent) {
     localStorage.removeItem(`${packageName}-auth`);
   };
 
-  successAuth({ token, user, roles, rolesProps, skipRedirect, device }) {
+  successAuth({ token, user, roles, rolesProps, skipRedirect, device, skipAfterInitCall }) {
     this.authorization = token;
     this.authorizationDevice = device;
     this.user = user;
@@ -200,6 +201,8 @@ const AppClient = parent => class Client extends use(parent) {
       localStorage.setItem(`${packageName}-auth`, JSON.stringify({ token, user, roles, rolesProps }));
       localStorage.setItem(`${packageName}-device`, this.authorizationDevice);
     }
+
+    if (!skipAfterInitCall && this.afterUserInit) this.afterUserInit();
   }
 
   allow(entity, method) {

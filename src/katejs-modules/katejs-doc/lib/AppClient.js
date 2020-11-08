@@ -11,8 +11,8 @@ const AppClient = parent => class Client extends use(parent) {
     super(args);
     this.docPeriodFilters = {};
   }
-  afterInit() {
-    if (super.afterInit) super.afterInit();
+  async afterInit() {
+    if (super.afterInit) await super.afterInit();
     Object.keys(this.forms).forEach((formName) => {
       if (formName.endsWith('Item') && this.forms[formName].doc) {
         this.forms[formName] = DocItem(this.forms[formName]);

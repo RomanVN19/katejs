@@ -102,7 +102,7 @@ class KateComponent extends Component {
   }
   render() {
     const { app } = this.props;
-    const { layouts, defaultRedirect, initialized } = this.state;
+    const { layouts, defaultRedirect } = this.state;
     return (
       <KateFormProvider components={app.components} t={this.APP.t} logRerender={app.logRerender} >
         <Switch>

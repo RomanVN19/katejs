@@ -20,9 +20,16 @@ const AppClient = parent => class Client extends use(parent) {
     });
     this.settings = {};
   }
+  async afterInit() {
+    if (super.afterInit) await super.afterInit();
+    if (!this.successAuth) await this.updateSettings();
+  }
   // reload settings on user auth
-  async successAuth(params) {
-    super.successAuth(params);
+  async afterUserInit() {
+    if (super.afterUserInit) await super.afterUserInit();
+    await this.updateSettings();
+  }
+  async updateSettings() {
     const { response: settings } = await this.Settings.get();
     this.settings = settings;
   }

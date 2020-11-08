@@ -24,6 +24,7 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
     this.forms = {
       ...this.forms,
       IncomeItem: IncomeFormMixin(this.forms.IncomeItem),
+      ExpenseItem: ExpenseItemMixin(this.forms.ExpenseItem),
       IncomeReport,
       ExpenseReport,
       MoneyReport,
@@ -106,14 +107,23 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
       }
     });
   }
-  async afterInit() { // test open with link
-    await super.afterInit();
+  // async afterInit() { // test open with link
+  //   await super.afterInit();
+  //   await new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve();
+  //     }, 500);
+  //   });
+  //   this.forms.ExpenseItem = ExpenseItemMixin(this.forms.ExpenseItem); // test mixin after init
+  // }
+  async afterUserInit() {
+    if (super.afterUserInit) await super.afterUserInit();
     await new Promise((resolve) => {
       setTimeout(() => {
         resolve();
-      }, 500);
+      }, 1500);
     });
-    this.forms.ExpenseItem = ExpenseItemMixin(this.forms.ExpenseItem); // test mixin after init
+    console.log('after user init');
   }
 };
 AppClient.package = packageName;
