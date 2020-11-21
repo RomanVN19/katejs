@@ -18,6 +18,9 @@ const ProxyP = ProxyPolyfill();
 
 const makeFormsFromStructure = ({ structures, menu, forms: allForms, addToMenu }) => {
   Object.keys(structures).forEach((key) => {
+    if (structures[key].skipForForm) {
+      return;
+    }
     // eslint-disable-next-line no-param-reassign
     allForms[`${key}Item`] = makeItemForm({ structure: structures[key], name: key });
     // eslint-disable-next-line no-param-reassign

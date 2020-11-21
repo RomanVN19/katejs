@@ -40,6 +40,14 @@ export default class Form {
     value.get = id => get(value, id);
     // eslint-disable-next-line no-param-reassign
     value.set = (id, item) => set(value, id, item);
+    value.cut = function (id) {
+      const index = this.findIndex(i => i.id === id);
+      if (index > -1) {
+        return this.splice(index, 1)[0];
+      } else {
+        return undefined;
+      }
+    };
     this[elements] = value;
   }
   get elements() {

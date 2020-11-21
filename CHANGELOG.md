@@ -46,3 +46,9 @@
 - client app await afterInit
 - client app use redux logger
 - keep search on refresh
+
+# 1.1.9
+- skipForForm for entity
+- set url on new item save
+- elements.cut
+- refator ItemForm
