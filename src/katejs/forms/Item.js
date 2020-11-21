@@ -82,6 +82,9 @@ const makeItemForm = ({ structure, name, addActions = true, addElements = true }
         this.uuid = result.response.uuid;
         this.app.showAlert({ type: 'success', title: 'Saved!' });
       }
+      const url = `${window.location.pathname}?id=${this.uuid}`;
+      window.history.replaceState(window.history.state, undefined, url);
+
       if (result.error) {
         this.app.showAlert({ type: 'warning', title: result.error.message });
       }
