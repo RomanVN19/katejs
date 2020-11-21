@@ -7,6 +7,7 @@ const Wallet = {
       type: Fields.STRING,
     },
   ],
+  skipForForm: true,
 };
 
 const IncomeArticle = {
