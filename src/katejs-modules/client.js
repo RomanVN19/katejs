@@ -5,6 +5,7 @@ import AppImport from './katejs-import/lib/AppClient';
 import AppPrint from './katejs-print/lib/AppClient';
 import AppSettings from './katejs-settings/lib/AppClient';
 import AppUser from './katejs-user/lib/AppClient';
+import AppFiles from './katejs-files/lib/AppClient';
 
 export {
   AppApilog,
@@ -14,4 +15,5 @@ export {
   AppPrint,
   AppSettings,
   AppUser,
+  AppFiles,
 }

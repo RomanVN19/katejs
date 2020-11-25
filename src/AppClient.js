@@ -1,5 +1,5 @@
 import { use } from 'katejs/lib/client';
-import { AppDoc, AppUser, AppSettings } from 'katejs-modules/lib/client';
+import { AppDoc, AppUser, AppSettings, AppFiles } from 'katejs-modules/lib/client';
 
 import { structures, title, packageName, Settings } from './structure';
 import env from './front.env.json';
@@ -12,7 +12,7 @@ import MoneyReport from './forms/MoneyReport';
 import TestForm from './forms/TestForm';
 import icons from './icons';
 
-const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, AppSettings) {
+const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, AppSettings, AppFiles) {
   static title = title;
   static useLogger = false;
 

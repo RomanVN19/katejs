@@ -1,12 +1,12 @@
 import { makeEntitiesFromStructures, use } from 'katejs';
-import { AppDoc, AppUser, AppSettings } from 'katejs-modules';
+import { AppDoc, AppUser, AppSettings, AppFiles } from 'katejs-modules';
 import { structures, title, packageName, Settings } from './structure';
 
 import ExpenseMixin from './entities/ExpenseMixin';
 import IncomeMixin from './entities/IncomeMixin';
 import MoneyRecordMixin from './entities/MoneyRecordMixin';
 
-const AppServer = parent => class Server extends use(parent, AppDoc, AppUser, AppSettings) {
+const AppServer = parent => class Server extends use(parent, AppDoc, AppUser, AppSettings, AppFiles) {
   static title = title;
 
   constructor(params) {
