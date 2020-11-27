@@ -56,9 +56,14 @@ export default Form => class FileItem extends Form {
     fd.append('fileData', this.content.file.files[0]);
     fd.append('uuid', this.uuid);
     const { error } = await this.app.File.upload(fd);
+    this.setPreview();
   }
   async load() {
     const res = await super.load();
-    this.content.image.src = `${this.app.baseUrl}/file/${this.uuid}/${res.fileName}`;
+    this.setPreview();
+    return res;
+  }
+  setPreview() {
+    this.content.image.src = `${this.app.baseUrl}/file/${this.uuid}/${this.content.fileName.value}?date=${new Date().getTime()}`;
   }
 }

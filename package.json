@@ -17,7 +17,8 @@
     "dev-client": "cross-env ENV=local babel-node makeEnv.js && react-scripts start",
     "dev-dbsync": "cross-env ENV=local babel-node src/server.js dbsync",
     "dev-dbsync-sqlite": "cross-env ENV=sqlite babel-node src/server.js dbsync",
-    "dev-server-sqlite": "cross-env ENV=sqlite nodemon --watch src/AppServer.js  --watch src/entities --exec babel-node src/server.js"
+    "dev-server-sqlite": "cross-env ENV=sqlite nodemon --watch src/AppServer.js  --watch src/entities --exec babel-node src/server.js",
+    "dbsync": "babel-node src/server.js dbsync"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "@babel/node": "^7.2.2",
+    "@babel/polyfill": "^7.12.1",
     "@material-ui/core": "3.1.1",
     "@material-ui/icons": "3.0.1",
     "ansi-styles": "^3.2.0",
