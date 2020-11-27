@@ -15,9 +15,9 @@ const AppServer = parent => class Server extends use(parent) {
       File: File(this.entities.File),
     };
     this.filesUploadDir = 'upload';
-    // this.router = new Router();
-    // this.router.post(apiUrl, this.apiLog);
-    // this.httpMidlewares.push(this.router.routes());
+    const router = new Router();
+    router.get('/api/file/:uuid/:filename', this.serveFile);
+    this.httpMidlewares.push(router.routes());
   }
   async afterInit() {
     if (super.afterInit) {
@@ -29,41 +29,10 @@ const AppServer = parent => class Server extends use(parent) {
     } catch {
       fs.mkdirSync(this.filesUploadPath);
     }
-    console.log('path', this.filesUploadPath);
   }
-  // apiLog = async (ctx, next) => {
-  //   await next();
-  //   const { entity, method } = ctx.params;
-  //
-  //   const { exceptMethods, log: logFunc } = this.actionLogParams || {};
-  //   if (exceptMethods && exceptMethods.indexOf(method) > -1) return;
-  //
-  //   const log = {
-  //     entity,
-  //     method,
-  //   };
-  //   if (ctx.state.user) {
-  //     const { title, uuid } = ctx.state.user;
-  //     log.userTitle = title;
-  //     log.userId = uuid;
-  //   }
-  //   log.status = ctx.response.status;
-  //   if (log.status === 200 && (method === 'get' || method === 'put')) {
-  //     const { title, uuid } = ctx.body;
-  //     log.objectTitle = title;
-  //     log.objectId = uuid;
-  //     if (method === 'put') {
-  //       log.data = {
-  //         shallowDiff: shallowDiff(ctx.state.savedEntity, ctx.request.body.body || {}),
-  //       };
-  //     }
-  //   }
-  //   if (logFunc) await logFunc(ctx, log);
-  //
-  //   if (typeof log.data === 'object') log.data = JSON.stringify(log.data);
-  //
-  //   await this.ActionLog.put({ data: { body: log } });
-  // }
+  serveFile = async(ctx) => {
+    ctx.body = fs.createReadStream(path.join(this.filesUploadPath, ctx.params.uuid));
+  }
 };
 AppServer.package = packageName;
 export default AppServer;

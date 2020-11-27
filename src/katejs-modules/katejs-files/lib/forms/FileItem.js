@@ -3,7 +3,10 @@ import { Elements } from 'katejs/lib/client';
 export default Form => class FileItem extends Form {
   constructor(args) {
     super(args);
-    this.elements.cut('fileName');
+    this.elements.set('fileName', {
+      ...this.elements.get('fileName'),
+      hidden: true,
+    });
     this.elements.push({
       type: Elements.GRID,
       elements: [
@@ -27,6 +30,7 @@ export default Form => class FileItem extends Form {
       return;
     }
     this.content.title.value = files[0].name;
+    this.content.fileName.value = files[0].name;
     await this.save();
     const fd = new FormData();
     fd.append('fileData', this.content.file.files[0]);
