@@ -11,18 +11,38 @@ export default Form => class FileItem extends Form {
       type: Elements.GRID,
       elements: [
         {
-          id: 'file',
-          type: Elements.INPUT,
-          inputType: 'file',
+          cols: 8,
+          type: Elements.GROUP,
+          elements: [
+            this.elements.cut('title'),
+            {
+              type: Elements.GRID,
+              elements: [
+                {
+                  id: 'file',
+                  type: Elements.INPUT,
+                  inputType: 'file',
+                  cols: 8,
+                },
+                {
+                  id: 'upload',
+                  title: 'Upload',
+                  type: Elements.BUTTON,
+                  onClick: () => this.upload(),
+                  cols: 4,
+                },
+              ],
+            },
+          ],
         },
         {
-          id: 'upload',
-          title: 'Upload',
-          type: Elements.BUTTON,
-          onClick: () => this.upload(),
-        },
+          type: Elements.IMAGE,
+          id: 'image',
+          style: { width: '100%' },
+        }
       ],
-    });
+    }
+);
   }
   async upload() {
     const files = this.content.file.files;
@@ -36,5 +56,9 @@ export default Form => class FileItem extends Form {
     fd.append('fileData', this.content.file.files[0]);
     fd.append('uuid', this.uuid);
     const { error } = await this.app.File.upload(fd);
+  }
+  async load() {
+    const res = await super.load();
+    this.content.image.src = `${this.app.baseUrl}/file/${this.uuid}/${res.fileName}`;
   }
 }
