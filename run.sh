@@ -1,0 +1,1 @@
+nohup node ./lib/server-dev.js &
