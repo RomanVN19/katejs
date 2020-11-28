@@ -51,4 +51,7 @@
 - skipForForm for entity
 - set url on new item save
 - elements.cut
-- refator ItemForm
+- refactor ItemForm
+
+# 1.1.10
+- IMAGE element use `value` as src
