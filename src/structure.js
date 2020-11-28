@@ -57,8 +57,31 @@ const Expense = {
       name: 'total',
       type: Fields.DECIMAL,
     },
+    {
+      name: 'image1',
+      type: Fields.REFERENCE,
+      entity: 'File',
+      attributes: ['title', 'uuid', 'fileName'],
+    },
+    {
+      name: 'image2',
+      type: Fields.REFERENCE,
+      entity: 'File',
+      attributes: ['title', 'uuid', 'fileName'],
+    },
   ],
   tables: [
+    {
+      name: 'images',
+      fields: [
+        {
+          name: 'image',
+          type: Fields.REFERENCE,
+          entity: 'File',
+          attributes: ['title', 'uuid', 'fileName'],
+        },
+      ],
+    },
     {
       name: 'expensesDetails',
       fields: [

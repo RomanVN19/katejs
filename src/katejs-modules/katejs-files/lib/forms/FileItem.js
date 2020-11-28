@@ -1,4 +1,5 @@
 import { Elements } from 'katejs/lib/client';
+import { getImageUrl } from '../AppClient';
 
 export default Form => class FileItem extends Form {
   constructor(args) {
@@ -64,6 +65,6 @@ export default Form => class FileItem extends Form {
     return res;
   }
   setPreview() {
-    this.content.image.src = `${this.app.baseUrl}/file/${this.uuid}/${this.content.fileName.value}?date=${new Date().getTime()}`;
+    this.content.image.src = this.app.getFileUrl(this.uuid, this.content.fileName.value);
   }
 }
