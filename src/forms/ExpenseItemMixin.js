@@ -36,6 +36,11 @@ export default ItemForm => class ExpenseItem extends ItemForm {
     sumCol.onChange = () => this.calcTotal();
     table.onDelete = () => this.calcTotal();
     console.log('mixin constr');
+    const imagesTable = this.elements.get('images');
+    imagesTable.columns.push({
+      ...AppFiles.getImageTableElement('image', 'images', this),
+      width: `15%`,
+    });
   }
 
   calcTotal() {

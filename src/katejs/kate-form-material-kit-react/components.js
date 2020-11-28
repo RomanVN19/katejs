@@ -427,8 +427,8 @@ const loadingConnector = ({ t, ...props }) => (
   <img src={LoadingImg} alt={t(props.alt) || t('Loading...')} />
 );
 
-const imageConnector = ({ title, value, setData, path, tag, t, ...props }) => (
-  <img alt={t(props.alt || props.title || 'image')} {...props} />
+const imageConnector = ({ title, value, setData, path, tag, t, src, ...props }) => (
+  <img alt={t(props.alt || props.title || 'image')} src={src || value} {...props} />
 );
 
 const progressConnector = props => (
