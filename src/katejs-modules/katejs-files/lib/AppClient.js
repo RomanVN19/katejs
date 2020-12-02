@@ -46,6 +46,7 @@ const applyFormLoad = (form) => {
       } else {
         this.content[getImagePreviewFieldId(index)].src = '';
       }
+      this.content[getImagePreviewFieldId(index)].hidden = !fieldValue;
 
       const fieldChange = form.content[field].onChange;
       form.content[field].onChange = (value) => {
@@ -60,6 +61,7 @@ const applyFormLoad = (form) => {
             value.fileName,
           );
         }
+        form.content[getImagePreviewFieldId(index)].hidden = !value;
       };
     });
 
@@ -76,6 +78,7 @@ const applyFormLoad = (form) => {
         } else {
           row[getImageTablePreviewFieldId(index)].value = '';
         }
+        row[getImageTablePreviewFieldId(index)].hidden = !row[imageField].value;
       }
     });
 
@@ -122,6 +125,7 @@ AppClient.getImageTableElement = (imageField, tableId, form) => {
         rowContent[imageField].value.fileName,
       );
     }
+    rowContent[id].hidden = !rowContent[imageField].value;
   };
 
   form.imageTableFields.push({

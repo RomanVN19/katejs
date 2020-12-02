@@ -1,5 +1,4 @@
 import { Elements } from 'katejs/lib/client';
-import { getImageUrl } from '../AppClient';
 
 export default Form => class FileItem extends Form {
   constructor(args) {
@@ -45,6 +44,12 @@ export default Form => class FileItem extends Form {
     }
 );
   }
+  afterInit() {
+    super.afterInit();
+    if (!this.uuid) {
+      this.setPreview();
+    }
+  }
   async upload() {
     const files = this.content.file.files;
     if (!files || !files.length) {
@@ -56,7 +61,7 @@ export default Form => class FileItem extends Form {
     const fd = new FormData();
     fd.append('fileData', this.content.file.files[0]);
     fd.append('uuid', this.uuid);
-    const { error } = await this.app.File.upload(fd);
+    await this.app.File.upload(fd);
     this.setPreview();
   }
   async load() {
@@ -66,5 +71,8 @@ export default Form => class FileItem extends Form {
   }
   setPreview() {
     this.content.image.src = this.app.getFileUrl(this.uuid, this.content.fileName.value);
+    if (!this.content.fileName.value) {
+      this.content.image.hidden = true;
+    }
   }
 }
