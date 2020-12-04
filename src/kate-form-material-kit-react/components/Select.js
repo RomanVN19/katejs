@@ -11,7 +11,6 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import IconButton from '@material-ui/core/IconButton';
 import Clear from '@material-ui/icons/Clear';
-// import Check from '@material-ui/icons/Check';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -60,8 +59,9 @@ class Select extends Component {
     selected: -1,
   }
   // eslint-disable-next-line react/sort-comp
-  getInputText(value) {
-    const { options, selectValue } = this.props;
+  getInputText(value, newOptions) {
+    const options = newOptions || this.props.options;
+    const { selectValue } = this.props;
     if (selectValue) {
       const option = options.find(item => item.value === value);
       return (option && option.title) || '';
@@ -78,9 +78,20 @@ class Select extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { value } = this.props;
-    const { value: newValue } = nextProps;
+    const { value: newValue, options } = nextProps;
+    const newState = {};
+    let needUpdate = false;
+    if (this.props.options !== options ) {
+      newState.options = options;
+      newState.inputText = this.getInputText(newValue, options);
+      needUpdate = true;
+    }
     if (value !== newValue) {
-      this.setState({ inputText: this.getInputText(newValue) });
+      newState.inputText = this.getInputText(newValue, options);
+      needUpdate = true;
+    }
+    if (needUpdate) {
+      this.setState(newState);
     }
   }
   inputRef = (ref) => {

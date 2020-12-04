@@ -55,3 +55,6 @@
 
 # 1.1.10
 - IMAGE element use `value` as src
+
+# 1.1.11
+- SELECT update options from .content
