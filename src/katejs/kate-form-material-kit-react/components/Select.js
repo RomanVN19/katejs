@@ -187,6 +187,9 @@ class Select extends Component {
     this.setState({
       inputText: (value && value.title) || '',
     });
+    if (value && value.onClick) {
+      value.onClick();
+    }
     this.handleClose();
   }
   handleBlur = () => {
