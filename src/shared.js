@@ -45,6 +45,13 @@ export const getElement = (field, form) => {
       form[getFuncName] = async (query) => {
         const where = query && { title: { $like: `%${query}%` } };
         const { response } = await form.app[field.entity].query({ where });
+        if (query && !response.length && form.app.allowCreateInSelect) {
+          const create = async () => {
+            const { response: newElement} = await form.app[field.entity].put({ body: { title: query } });
+            form.content[element.id].value = newElement;
+          };
+          response.unshift({ title: `${form.app.t('Create')}: ${query}`, onClick: create });
+        }
         return response;
       };
     }
