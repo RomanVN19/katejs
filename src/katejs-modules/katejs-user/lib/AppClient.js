@@ -140,7 +140,7 @@ const AppClient = parent => class Client extends use(parent) {
     localStorage.removeItem(`${packageName}-auth`);
   };
 
-  successAuth({ token, user, roles, rolesProps, skipRedirect, device, skipAfterInitCall }) {
+  async successAuth({ token, user, roles, rolesProps, skipRedirect, device, skipAfterInitCall }) {
     this.authorization = token;
     this.authorizationDevice = device;
     this.user = user;
@@ -182,6 +182,9 @@ const AppClient = parent => class Client extends use(parent) {
         title: this.userRolesProps[user.roles[0]].title,
       });
     }
+
+    if (!skipAfterInitCall && this.afterUserInit) await this.afterUserInit();
+
     const { forms } = this.getLayout();
     if (forms.leftMenu !== 'M') {
       setTimeout(() => {
@@ -201,8 +204,6 @@ const AppClient = parent => class Client extends use(parent) {
       localStorage.setItem(`${packageName}-auth`, JSON.stringify({ token, user, roles, rolesProps }));
       localStorage.setItem(`${packageName}-device`, this.authorizationDevice);
     }
-
-    if (!skipAfterInitCall && this.afterUserInit) this.afterUserInit();
   }
 
   allow(entity, method) {
