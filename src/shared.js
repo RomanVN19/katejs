@@ -49,6 +49,9 @@ export const getElement = (field, form) => {
           const create = async () => {
             const { response: newElement} = await form.app[field.entity].put({ body: { title: query } });
             form.content[element.id].value = newElement;
+            if (form.content[element.id].onChange) {
+              form.content[element.id].onChange(newElement);
+            }
           };
           response.unshift({ title: `${form.app.t('Create')}: ${query}`, onClick: create });
         }
