@@ -1,6 +1,6 @@
 {
   "name": "katejs",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "KateJS - фреймворк разработки бизнес приложений.",
   "main": "lib/index.js",
   "scripts": {
@@ -33,7 +33,6 @@
     "classnames": "2.2.6",
     "core-js": "^3.2.1",
     "crypto": "^1.0.1",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "koa": "^2.5.2",
     "koa-body": "^4.0.6",
     "koa-bodyparser": "^4.2.1",
@@ -80,8 +79,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^1.18.3",
     "style-loader": "^0.21.0",
-    "webpack-cli": "^3.3.8",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-cli": "^3.3.8"
   },
   "homepage": "https://github.com/romannep/katejs#readme"
 }

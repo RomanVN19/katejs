@@ -58,3 +58,6 @@
 
 # 1.1.11
 - SELECT update options from .content
+
+# 1.1.14
+- rm webpack dep
