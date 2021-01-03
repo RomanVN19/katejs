@@ -83,6 +83,16 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
             form: 'DebtFlowReport',
             title: 'Взаиморасчеты',
           },
+          {
+            form: 'Test',
+            title: 'short',
+            icon: icons.DebtFlowReport,
+          },
+          {
+            form: 'Test',
+            title: 'Loooong lo00000oooooooong',
+            icon: icons.DebtFlowReport,
+          },
         ],
       },
     );

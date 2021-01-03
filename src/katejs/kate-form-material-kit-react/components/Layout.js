@@ -53,6 +53,7 @@ const styles = theme => ({
     },
     '& svg': {
       fill: theme.palette.drawer.main,
+      flexShrink: 0,
     },
     '& span': {
       color: theme.palette.drawer.main,
