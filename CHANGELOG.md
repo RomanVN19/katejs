@@ -61,3 +61,6 @@
 
 # 1.1.14
 - rm webpack dep
+
+# 1.1.15
+- fix menu icon shrink
