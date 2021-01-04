@@ -415,9 +415,15 @@ class Auth extends Form {
       this.content.codeActivate.hidden = true;
     }
   }
-  afterInit() {
+  async afterInit() {
     if (this.username && this.code) {
       this.activate();
+    }
+    if (this.app.showUsersList) {
+      const { response: users } = await this.app.User.list();
+      this.content.username.type = Elements.SELECT;
+      this.content.username.selectValue = true;
+      this.content.username.options = users.map(title => ({ title, value: title }));
     }
   }
 }

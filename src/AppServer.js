@@ -27,6 +27,7 @@ const AppServer = parent => class Server extends use(parent, AppDoc, AppUser, Ap
 
     // test tokens renew
     // this.jwtExpires = 60;
+    this.showUsersList = true;
   }
 };
 AppServer.package = packageName;

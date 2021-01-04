@@ -378,6 +378,11 @@ class User extends Entity {
     }
     return { response: { message: 'OK' } };
   }
+
+  async list() {
+    const { response: users } = await this.query({ data: { limit: -1 }});
+    return { response: users.map(item => item.username) };
+  }
 }
 
 export default User;

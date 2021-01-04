@@ -92,6 +92,13 @@ const AppServer = parent => class Server extends use(parent) {
       this.skipAuthorization = true;
     }
     this.updateRoles();
+    if (this.showUsersList) {
+      this.publicAccessRules.push({
+        entity: 'User',
+        method: 'list',
+        access: true,
+      });
+    }
   }
 
   async updateRoles() {

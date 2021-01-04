@@ -117,6 +117,7 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
         });
       }
     });
+    this.showUsersList = true;
   }
   // async afterInit() { // test open with link
   //   await super.afterInit();
