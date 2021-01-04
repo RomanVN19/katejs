@@ -58,6 +58,7 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
       {
         title: 'Reports',
         icon: icons.OrderDynamics,
+        rule: { entity: 'ExpenseArticle', method: 'put' },
         submenu: [
           {
             form: 'ProductSalesReport',

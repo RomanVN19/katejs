@@ -187,11 +187,9 @@ const AppClient = parent => class Client extends use(parent) {
 
     const { forms } = this.getLayout();
     if (forms.leftMenu !== 'M') {
-      setTimeout(() => {
-        this.open('M', undefined, 'leftMenu');
-        this.setMenu(this.menu, topElements);
-      }, 0);
+      this.open('M', undefined, 'leftMenu');
     }
+    this.setMenu(this.menu, topElements);
 
     if (!skipRedirect) {
       const firstForm = this.menu.find(menuItem => !menuItem.rule || this.allow(menuItem.rule));

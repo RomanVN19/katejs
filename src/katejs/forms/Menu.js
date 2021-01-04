@@ -2,6 +2,7 @@ import { Form } from '../kate-client';
 import { Elements } from '../kate-form-material-kit-react';
 
 export const menuForm = Symbol('menuForm');
+export const scheduledMenuUpdate = Symbol('scheduledUpdate');
 
 export default class Menu extends Form {
   constructor(params) {
@@ -21,6 +22,16 @@ export default class Menu extends Form {
     }];
     this.app[menuForm] = this;
     this.app.drawer = this.content;
+  }
+  afterInit() {
+    if (this.app[scheduledMenuUpdate]) {
+      if (this.app[scheduledMenuUpdate].menu) {
+        this.setMenu(this.app[scheduledMenuUpdate].menu);
+      }
+      if (this.app[scheduledMenuUpdate].topElements) {
+        this.setTopElements(this.app[scheduledMenuUpdate].topElements);
+      }
+    }
   }
   switchDrawer = () => {
     this.content.menu.drawerOpen = !this.content.menu.drawerOpen;
