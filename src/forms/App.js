@@ -10,7 +10,7 @@ import '../kate-form-material-kit-react/styles.css';
 import makeItemForm from './Item';
 import makeListForm, { FormsFilters } from './List';
 
-import Menu, { menuForm } from './Menu';
+import Menu, { menuForm, scheduledMenuUpdate } from './Menu';
 import Alerts, { showAlert } from './Alerts';
 
 
@@ -70,6 +70,7 @@ export default class PlatformApp extends App {
     this.entityMethods = {}; // for Proxy polyfill
 
     this[FormsFilters] = {};
+    this[scheduledMenuUpdate] = {};
   }
   setDrawer(drawerOpen) {
     this.drawerOpen = drawerOpen;
@@ -94,23 +95,15 @@ export default class PlatformApp extends App {
     if (menu) {
       if (this[menuForm]) {
         this[menuForm].setMenu(menu);
-      } else { // to process setMenu from constructor
-        setTimeout(() => {
-          if (this[menuForm]) {
-            this[menuForm].setMenu(menu);
-          }
-        }, 0);
+      } else {
+        this[scheduledMenuUpdate].menu = menu;
       }
     }
     if (topElements) {
       if (this[menuForm]) {
         this[menuForm].setTopElements(topElements);
       } else {
-        setTimeout(() => {
-          if (this[menuForm]) {
-            this[menuForm].setTopElements(topElements);
-          }
-        });
+        this[scheduledMenuUpdate].topElements = topElements;
       }
     }
   }
