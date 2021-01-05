@@ -145,6 +145,9 @@ export default class Database {
     try {
       await this.sequelize.authenticate();
       this.logger.info('...connected to database');
+      if (this.isSqlite) {
+        await this.sequelize.query('PRAGMA foreign_keys = false;');
+      }
     } catch (e) {
       this.logger.error('...can not connect to database!', e);
       process.exit(e);
@@ -181,9 +184,6 @@ export default class Database {
   }
 
   async sync() {
-    if (this.isSqlite) {
-      await this.sequelize.query('PRAGMA foreign_keys = false;');
-    }
     await this.sequelize.sync({ alter: true });
   }
 }

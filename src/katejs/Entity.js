@@ -139,6 +139,17 @@ export default class Entity {
     let transaction;
     try {
       transaction = t || await this[model].db.sequelize.transaction();
+      // clear tables
+      if (this[tables]) {
+        await Promise.all(Object.keys(this[tables]).map(async (tableName) => {
+          const table = this[tables][tableName];
+          await table[model].destroy({
+            where: { [`${this[model].Name}Uuid`]: data.uuid },
+            transaction,
+          });
+        }));
+      }
+
       const item = await this[model].findByPk(data.uuid, { ...this[modelGetOptions], transaction });
       if (!item) {
         return { error: noItemErr };
