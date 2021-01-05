@@ -35,7 +35,7 @@ class AppServer {
       result.push((this[terms] && this[terms][strings[index]]) || strings[index]);
       result.push(key);
     });
-    result.push((this[terms] && this[terms][strings[strings.length - 1]]) 
+    result.push((this[terms] && this[terms][strings[strings.length - 1]])
       || strings[strings.length - 1]);
     return result.join('');
   }
@@ -82,6 +82,7 @@ export default class KateServer {
   }
   async syncDatabase() {
     if (this.database) {
+      await this.database.init();
       this.logger.info('synchronizing database structure...');
       try {
         await this.database.sync();

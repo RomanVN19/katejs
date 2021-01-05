@@ -62,6 +62,8 @@
 # 1.1.14
 - rm webpack dep
 
-# 1.1.16
+# 1.1.17
 - fix menu icon shrink
 - fix menu render
+- delete tables on entity delete
+- for sqlite - no FK check
