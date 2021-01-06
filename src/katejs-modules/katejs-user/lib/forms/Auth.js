@@ -72,6 +72,7 @@ class Auth extends Form {
         type: Elements.LABEL,
         title: 'Forgot your password?',
         onClick: this.gotoRecovery,
+        hidden: !!this.app.userHideRecovery,
         style: linkStyle,
       },
       {
