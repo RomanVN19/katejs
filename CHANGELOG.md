@@ -67,3 +67,6 @@
 - fix menu render
 - delete tables on entity delete
 - for sqlite - no FK check
+
+# 1.1.18
+- AppServer.rawQuery(query: string): { response, error }

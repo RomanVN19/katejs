@@ -10,7 +10,6 @@ export const literal = Symbol('literal');
 export const modelGetOptions = Symbol('modelGetOptions');
 export const modelUpdateFields = Symbol('modelUpdateFields');
 export const tables = Symbol('tables');
-export const rawQuery = Symbol('rawQuery');
 
 export const capitalize = string => `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
 
@@ -164,21 +163,6 @@ export default class Entity {
       if (transaction) {
         await transaction.rollback();
       }
-      return { error };
-    }
-  }
-
-  async [rawQuery]({ query }) {
-    try {
-      const [results, metadata] = await this[model].db.sequelize.query(query);
-      return {
-        response: {
-          results,
-          metadata,
-        },
-      };
-    } catch (error) {
-      this.logger.error(error);
       return { error };
     }
   }
