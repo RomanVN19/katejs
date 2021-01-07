@@ -7,7 +7,7 @@ import { apiUrl } from './http';
 import Fields from './fields';
 import { makeEntitiesFromStructures, trivialLogger } from './server';
 import Entity from './Entity';
-import { literal, rawQuery, model } from './Entity';
+import { literal, model } from './Entity';
 
 const use = (parent, ...classes) => {
   let result = parent;
@@ -38,6 +38,5 @@ export {
   Server,
   apiUrl,
   literal,
-  rawQuery,
   model,
 };
