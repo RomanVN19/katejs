@@ -137,6 +137,11 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
     });
     console.log('after user init');
   }
+  async afterInit() {
+    const { forms } = this.getLayout();
+    console.log('INIT', forms);
+    await super.afterInit();
+  }
 };
 AppClient.package = packageName;
 export default AppClient;
