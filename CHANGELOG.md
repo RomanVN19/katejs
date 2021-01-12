@@ -68,5 +68,6 @@
 - delete tables on entity delete
 - for sqlite - no FK check
 
-# 1.1.18
+# 1.1.19
 - AppServer.rawQuery(query: string): { response, error }
+- afterInit after layout init

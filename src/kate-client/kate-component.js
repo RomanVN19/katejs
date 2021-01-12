@@ -34,10 +34,12 @@ class KateComponent extends Component {
       const l = this.APP.defaultLayout;
       this.state.defaultRedirect = this.APP.getPath(l.layout, l.areas, l.params);
     }
-    this.callAfterInit();
+    // call afterInit after first render, to catch forms
   }
   async callAfterInit() {
-    if (this.APP.afterInit) await this.APP.afterInit();
+    if (this.APP.afterInit) {
+      await this.APP.afterInit();
+    }
     this.setState({ initialized: true });
   }
   getLayoutRender(layout) {
@@ -91,6 +93,10 @@ class KateComponent extends Component {
         content = params.content;
       }
       this.APP[currentForms].search = search;
+      if (!this.afterInitCalled) {
+        this.afterInitCalled = true;
+        this.callAfterInit();
+      }
       if (!initialized) {
         return (<div></div>) // TODO: pretty loading message
       } else {
