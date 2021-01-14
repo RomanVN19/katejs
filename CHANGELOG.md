@@ -68,6 +68,7 @@
 - delete tables on entity delete
 - for sqlite - no FK check
 
-# 1.1.19
+# 1.1.20
 - AppServer.rawQuery(query: string): { response, error }
 - afterInit after layout init
+- fix menu re-set

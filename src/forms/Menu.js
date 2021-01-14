@@ -32,6 +32,12 @@ export default class Menu extends Form {
         this.setTopElements(this.app[scheduledMenuUpdate].topElements);
       }
     }
+    if (this.app[scheduledMenuUpdate]) {
+      this.app[scheduledMenuUpdate] = undefined;
+    }
+  }
+  beforeUnmount() {
+    this.app[menuForm] = undefined;
   }
   switchDrawer = () => {
     this.content.menu.drawerOpen = !this.content.menu.drawerOpen;
