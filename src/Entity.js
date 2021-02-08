@@ -170,6 +170,20 @@ export default class Entity {
   async query({ data = {}, transaction, lock } = { data: {} }) {
     const queryOptions = {};
     if (data && (data.where || data.attributes || data.group || data.order)) {
+      if (this.app.database.isSqlite) {
+        if (data.where && data.where.title && data.where.title.$like
+          && Object.keys(data.where.title).length === 1 && data.where.title.$like.match(/\%.*\%/)) {
+          const like = data.where.title.$like;
+          const likeOr = `%${like[1].toUpperCase() === like[1] ? like[1].toLowerCase() : like[1].toUpperCase()}${like.substr(2)}`;
+          delete data.where.title['$like'];
+          data.where.title = {
+            '$or': [
+              { '$like': like },
+              { '$like': likeOr },
+            ],
+          };
+        }
+      }
       data.where = replaceOps(data.where, this[model].db.Sequelize, queryOptions);
       data.attributes = replaceOps(data.attributes, this[model].db.Sequelize, queryOptions);
       data.group = replaceOps(data.group, this[model].db.Sequelize, queryOptions);

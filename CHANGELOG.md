@@ -72,3 +72,6 @@
 - AppServer.rawQuery(query: string): { response, error }
 - afterInit after layout init
 - fix menu re-set
+
+# 1.1.21
+- sqlite title search hack
