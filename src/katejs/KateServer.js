@@ -58,6 +58,7 @@ export default class KateServer {
     this.httpParams = httpParams;
     if (databaseParams) {
       this.database = new Database({ databaseParams, entities, logger: this.logger });
+      this.app.database = this.database;
       this.app.rawQuery = async (query) => {
         try {
           return { response: await this.database.sequelize.query(query) };
