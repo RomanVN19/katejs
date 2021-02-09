@@ -225,7 +225,8 @@ const AppClient = parent => class Client extends use(parent) {
   setMenuByRules = (menu, topElements) => {
     let filteredMenu;
     if (menu) {
-      filteredMenu = menu.filter((menuItem) => {
+      filteredMenu = menu.map((menuItemOrigin) => {
+        const menuItem = { ...menuItemOrigin };
         if (menuItem.submenu) {
           // eslint-disable-next-line no-param-reassign
           menuItem.submenu = menuItem.submenu.filter((submenuItem) => {
@@ -233,9 +234,9 @@ const AppClient = parent => class Client extends use(parent) {
             return this.allow(submenuItem.rule);
           });
         }
-        if (!menuItem.rule) return true;
-        return this.allow(menuItem.rule);
-      });
+        if (!menuItem.rule || this.allow(menuItem.rule)) return menuItem;
+        return false;
+      }).filter(item => item);
     }
     this.setMenuParent(filteredMenu, topElements);
   }

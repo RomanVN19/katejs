@@ -63,36 +63,44 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
           {
             form: 'ProductSalesReport',
             title: 'Product sales',
+            rule: { entity: 'ExpenseArticle', method: 'put' },
           },
           {
             form: 'OrdersToDeliverReport',
             title: 'Orders to deliver',
+            rule: { entity: 'ExpenseArticle', method: 'put' },
           },
           {
             form: 'CashFlow',
             title: 'Cash flow',
+            rule: { entity: 'ExpenseArticle', method: 'put' },
           },
           {
             form: 'OrderDynamics',
             title: 'Order dynamics',
+            rule: { entity: 'ExpenseArticle', method: 'put' },
           },
           {
             form: 'ProductFlowReport',
             title: 'Product flow',
+            rule: { entity: 'ExpenseArticle', method: 'put' },
           },
           {
             form: 'DebtFlowReport',
             title: 'Взаиморасчеты',
+            rule: { entity: 'ExpenseArticle', method: 'put' },
           },
           {
             form: 'Test',
             title: 'short',
             icon: icons.DebtFlowReport,
+            rule: { entity: 'ExpenseArticle', method: 'put' },
           },
           {
             form: 'Test',
             title: 'Loooong lo00000oooooooong',
             icon: icons.DebtFlowReport,
+            rule: { entity: 'ExpenseArticle', method: 'put' },
           },
         ],
       },
