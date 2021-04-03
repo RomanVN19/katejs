@@ -27,6 +27,9 @@ const dialogStyles = {
     ...basicsStyle.modalBody,
     overflowY: 'unset',
   },
+  center: {
+    zIndex: 10,
+  },
 };
 
 const CustomDialog = (props) => {

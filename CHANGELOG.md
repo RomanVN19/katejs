@@ -75,3 +75,7 @@
 
 # 1.1.21
 - sqlite title search hack
+
+# 1.1.22
+- input reasonly select element
+- modal style fix, no title fix
