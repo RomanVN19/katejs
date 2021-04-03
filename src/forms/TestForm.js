@@ -50,6 +50,51 @@ export default class TestForm extends Form {
           },
         ],
       },
+      {
+        type: Elements.GRID,
+        elements: [
+          {
+            id: 'selectReadonly',
+            type: Elements.SELECT,
+            selectValue: true,
+            inputReadonly: true,
+            openOnFocus: true,
+            options: [
+              {
+                title: '1mm',
+                value: 1,
+              },
+              {
+                title: '2mm',
+                value: 1,
+              },
+              {
+                title: '2mm',
+                value: 1,
+              },
+            ],
+            value: 2,
+          },
+          {
+            type: Elements.BUTTON,
+            title: 'Open modal',
+            onClick: () => this.content.modal.open = true,
+          },
+          {
+            type: Elements.MODAL,
+            open: false,
+            id: 'modal',
+            handleClose: () => 0,
+            elements: [
+              {
+                type: Elements.BUTTON,
+                title: 'Close',
+                onClick: () => this.content.modal.open = false,
+              },
+            ],
+          },
+        ],
+      },
     ];
 
     console.log('app form constr', !!this.app.authorization, this.app.allow('Expense', 'put'));

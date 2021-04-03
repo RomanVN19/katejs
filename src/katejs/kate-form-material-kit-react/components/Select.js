@@ -96,7 +96,7 @@ class Select extends Component {
   }
   inputRef = (ref) => {
     this.input = ref;
-  }
+  };
   handleInputChange = async (e) => {
     const inputText = e.target.value;
     const { options, getOptions } = this.props;
@@ -133,7 +133,7 @@ class Select extends Component {
         this.handleOpen();
       }
     }
-  }
+  };
   handleKeyDown = (e) => {
     const { selected, options } = this.state;
     switch (e.keyCode) {
@@ -168,7 +168,7 @@ class Select extends Component {
         break;
       default:
     }
-  }
+  };
   handleOpen = () => this.setState({ menuOpened: true });
   handleClose = () => this.setState({ menuOpened: false });
   handleSwitch = async () => {
@@ -181,7 +181,7 @@ class Select extends Component {
     } else {
       this.setState({ menuOpened: !this.state.menuOpened });
     }
-  }
+  };
   handleSelectOption = (value) => {
     this.props.onChange(this.props.selectValue ? value && value.value : value);
     this.setState({
@@ -191,7 +191,7 @@ class Select extends Component {
       value.onClick();
     }
     this.handleClose();
-  }
+  };
   handleBlur = () => {
     // input blur fires before click on options list
     // need timeout to catch options click
@@ -203,7 +203,7 @@ class Select extends Component {
         this.handleClose();
       }
     }, 500);
-  }
+  };
   handleClear = () => this.handleSelectOption(null);
   // eslint-disable-next-line react/sort-comp
   handleFocus = () => {
@@ -211,7 +211,7 @@ class Select extends Component {
     if (openOnFocus) {
       this.handleSwitch();
     }
-  }
+  };
   render() {
     const {
       classes,
@@ -227,6 +227,7 @@ class Select extends Component {
       disabled,
       noClear,
       optionStyle,
+      inputReadonly,
     } = this.props;
 
     const {
@@ -289,6 +290,7 @@ class Select extends Component {
             onChange={this.handleInputChange}
             onKeyDown={this.handleKeyDown}
             disabled={disabled}
+            readOnly={inputReadonly}
             inputProps={{ autoComplete: 'off' }}
             {...inputProps}
             endAdornment={

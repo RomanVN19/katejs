@@ -360,7 +360,7 @@ const modalConnector = (allProps) => {
       actions={actionsIndex > -1 && (
         <KateForm path={`${path}.elements.${actionsIndex}`} />
       )}
-      title={t(title)}
+      title={title === undefined ? undefined : t(title)}
       noScroll={noScroll}
       content={(
         <Fragment>
