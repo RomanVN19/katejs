@@ -10,9 +10,14 @@ const DocMixin = Entity => class DocEntity extends Entity {
   }
   async put(params) {
     // TODO - own transaction;
-    if (!params.data.body.number) {
+    return super.put(params);
+  }
+  async beforePut({ savedEntity, body, transaction, ctx }) {
+    if (super.beforePut) await super.beforePut({ savedEntity, body, transaction, ctx });
+
+    if (!body.number && (!savedEntity || !savedEntity.number)) {
       const { response: max } = await this.query({
-        ctx: params.ctx,
+        ctx,
         data: {
           noOptions: true,
           attributes: [
@@ -20,16 +25,13 @@ const DocMixin = Entity => class DocEntity extends Entity {
           ],
           limit: -1,
         },
-        transaction: params.transaction, // to find max in bulk create
+        transaction, // to find max in bulk create
       });
       const maxNumber = (max[0] && +max[0].maxnumber) || 0;
       // eslint-disable-next-line no-param-reassign
-      params.data.body.number = maxNumber + 1;
+      body.number = maxNumber + 1;
     }
-    return super.put(params);
-  }
-  async beforePut({ savedEntity, body, transaction, ctx }) {
-    if (super.beforePut) await super.beforePut({ savedEntity, body, transaction, ctx });
+
     const date = body.date || (savedEntity && savedEntity.date) || new Date();
     const number = body.number || savedEntity.number;
     // eslint-disable-next-line no-param-reassign
