@@ -79,7 +79,8 @@
     "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^1.18.3",
     "style-loader": "^0.21.0",
-    "webpack-cli": "^3.3.8"
+    "webpack-cli": "^3.3.8",
+    "webpack-node-externals": "^2.5.2"
   },
   "homepage": "https://github.com/romannep/katejs#readme"
 }
