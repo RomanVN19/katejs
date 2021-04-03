@@ -8,10 +8,6 @@ const DocMixin = Entity => class DocEntity extends Entity {
     this.structure.fields = this.structure.fields || [];
     this.structure.fields.unshift(...structures.Doc.fields);
   }
-  async put(params) {
-    // TODO - own transaction;
-    return super.put(params);
-  }
   async beforePut({ savedEntity, body, transaction, ctx }) {
     if (super.beforePut) await super.beforePut({ savedEntity, body, transaction, ctx });
 
