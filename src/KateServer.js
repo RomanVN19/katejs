@@ -97,7 +97,6 @@ export default class KateServer {
         await this.database.sync();
         this.logger.info('...database structure synchronized');
       } finally {
-        process.exit(0);
       }
     } else {
       this.logger.info('No database params!');
