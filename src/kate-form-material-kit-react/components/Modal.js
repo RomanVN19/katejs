@@ -33,11 +33,11 @@ const dialogStyles = {
 };
 
 const CustomDialog = (props) => {
-  const { actions, content, open, handleClose, title, classes, fullWidth, maxWidth, noScroll } = props;
+  const { actions, content, open, handleClose, title, classes, fullWidth, maxWidth, noScroll, zIndex } = props;
   return (
     <Dialog
       classes={{
-        root: classes.center,
+        root: zIndex ? classes.center : undefined,
         paper: noScroll ? classes.modalNoScroll : classes.modal,
       }}
       open={open}

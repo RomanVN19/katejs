@@ -80,5 +80,6 @@
 - input reasonly select element
 - modal style fix, no title fix
 
-# 1.1.23
+# 1.1.24
 - rm unnecessary process exit on dbsync
+- adjust modal zindex
