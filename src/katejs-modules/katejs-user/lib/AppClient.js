@@ -110,24 +110,27 @@ const AppClient = parent => class Client extends use(parent) {
     }
     return super.request(url, params, handlers);
   }
-
+  async checkNeedAuthorization() {
+    const { response } = await this.User.needAuthorization();
+    // check again - flag can be changed by some form contructor
+    if (this.skipAuthorization) return;
+    this.skipAuthorization = response && !response.needAuthorization;
+    if (!this.skipAuthorization) {
+      // this.setMenu([]);
+      // this.open('none', null, 'leftMenu');
+      this.open('Auth');
+    } else {
+      this.open('M', undefined, 'leftMenu');
+      this.setMenuParent(this.menu);
+    }
+  }
   async afterInit() {
     if (super.afterInit) await super.afterInit();
     this.checkSavedAuth();
     if (this.afterUserInit && this.authorization) await this.afterUserInit();
     if (!this.authorization && !this.skipAuthorization) {
-      const { response } = await this.User.needAuthorization();
-      // check again - flag can be changed by some form contructor
-      if (this.skipAuthorization) return;
-      this.skipAuthorization = response && !response.needAuthorization;
-      if (!this.skipAuthorization) {
-        // this.setMenu([]);
-        // this.open('none', null, 'leftMenu');
-        this.open('Auth');
-      } else {
-        this.open('M', undefined, 'leftMenu');
-        this.setMenuParent(this.menu);
-      }
+      // no await! need to catch skipAuthorization flag in Registration and other forms
+      this.checkNeedAuthorization();
     }
   }
 

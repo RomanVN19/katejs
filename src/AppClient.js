@@ -127,6 +127,8 @@ const AppClient = parent => class Client extends use(parent, AppDoc, AppUser, Ap
     });
     this.showUsersList = true;
     this.menu.find(item => item.form === 'ExpenseList').rule =  { entity: 'Expense', method: 'put' };
+
+    this.userRegistration = {};
   }
   // async afterInit() { // test open with link
   //   await super.afterInit();
