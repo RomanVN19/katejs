@@ -72,7 +72,7 @@ const makeListForm = ({ structure, name, addActions = true, addElements = true }
         this.app[FormsFilters][`${name}List`] = formFilters;
       }
       const result = await this.app[name]
-        .query({ where: this.filters, order: this.order, page: currentPage, limit });
+        .query({ where: this.filters, order: this.order, page: currentPage, limit, noTables: true });
       this.content.list.value = result.response;
       if (this.app.paginationLimit && result.response) {
         this.content.pagination.page = currentPage;

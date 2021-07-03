@@ -209,11 +209,14 @@ export default class Entity {
         order.push(orderField.name);
       }
     }
-    if (this[tables] && !data.noOptions) {
+    if (this[tables] && !data.noOptions && !data.noTables) {
       Object.keys(this[tables]).forEach(tableName =>
         order.push([{ model: this[tables][tableName][model], as: tableName }, 'rowNumber']));
     }
     const options = data.noOptions ? {} : { ...this[modelGetOptions], order };
+    if (data.noTables) {
+      options.include = options.include.filter(i => !i.isTable);
+    }
     if (!data.order) delete data.order; // to avoid replace in spread below
     const result = await this[model].findAll({
       ...options,

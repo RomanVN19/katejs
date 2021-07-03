@@ -117,6 +117,7 @@ const makeAssociations = (entities, logger) => {
           as: tableStructure.name,
           include: table[modelGetOptions].include,
           attributes: table[modelGetOptions].attributes,
+          isTable: true,
         });
       });
     }

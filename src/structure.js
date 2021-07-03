@@ -7,7 +7,7 @@ const Wallet = {
       type: Fields.STRING,
     },
   ],
-  skipForForm: true,
+  // skipForForm: true,
 };
 
 const IncomeArticle = {
@@ -124,6 +124,58 @@ export const Settings = {
   ],
 };
 
+const FourTable = {
+  fields: [
+    {
+      name: 'title',
+      type: Fields.STRING,
+    },
+    {
+      name: 'wallet',
+      type: Fields.REFERENCE,
+      entity: 'Wallet',
+    },
+  ],
+  tables: [
+    {
+      name: 'table1',
+      fields: [
+        {
+          name: 'title',
+          type: Fields.STRING,
+        },
+      ],
+    },
+    {
+      name: 'table2',
+      fields: [
+        {
+          name: 'title',
+          type: Fields.STRING,
+        },
+      ],
+    },
+    {
+      name: 'table3',
+      fields: [
+        {
+          name: 'title',
+          type: Fields.STRING,
+        },
+      ],
+    },
+    {
+      name: 'table4',
+      fields: [
+        {
+          name: 'title',
+          type: Fields.STRING,
+        },
+      ],
+    },
+  ],
+};
+
 export const title = 'Tutorial app';
 export const packageName = 'tutorial_app';
 export const structures = {
@@ -133,4 +185,5 @@ export const structures = {
   Wallet,
   Income,
   Expense,
+  FourTable,
 };
