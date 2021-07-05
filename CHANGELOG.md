@@ -84,3 +84,8 @@
 - rm unnecessary process exit on dbsync
 - adjust modal zindex
 - expose modelGetOptions
+
+# 1.1.26
+- `noTables`,`apartTables` options in Entity.query
+- load tables apart in Entity.get
+- List form use `noTables` options in query by default

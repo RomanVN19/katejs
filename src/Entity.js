@@ -55,19 +55,50 @@ export default class Entity {
   }
   async get({ data, transaction, lock }) {
     const order = [];
-    if (this[tables]) {
-      Object.keys(this[tables]).forEach(tableName =>
-        order.push([{ model: this[tables][tableName][model], as: tableName }, 'rowNumber']));
+
+    const allTables = this[tables] ? Object.keys(this[tables]) : [];
+    const tablesCount = allTables.length;
+    const getOptions = { ...this[modelGetOptions] };
+    const tablesIncludes = getOptions.include.filter(i => i.isTable);
+    if (tablesCount < 2) {
+      if (this[tables]) {
+        allTables.forEach(tableName =>
+          order.push([{ model: this[tables][tableName][model], as: tableName }, 'rowNumber']));
+      }
+    } else {
+      getOptions.include = getOptions.include.filter(i => !i.isTable);
+      getOptions.include.push(tablesIncludes.find(i => i.as === allTables[0]));
+      order.push([{ model: this[tables][allTables[0]][model], as: allTables[0] }, 'rowNumber']);
     }
 
-    const item = await this[model].findByPk(
+
+    let item = await this[model].findByPk(
       data.uuid,
-      { ...this[modelGetOptions], order, transaction, lock },
+      { ...getOptions, order, transaction, lock },
     );
     if (!item) {
       return { error: noItemErr };
     }
-    return { response: item.toJSON() };
+
+    item = item.toJSON();
+
+    if (tablesCount > 1) {
+      allTables.shift();
+      await Promise.all(allTables.map(async (tableName) => {
+        const tableItems = await this[tables][tableName][model].findAll({
+          where: {
+            [`${this[tables][tableName].parent}Uuid`]: data.uuid,
+          },
+          ...this[tables][tableName][modelGetOptions],
+          order: [['rowNumber']],
+          transaction,
+          lock,
+        });
+        item[tableName] = tableItems;
+      }));
+    }
+
+    return { response: item };
   }
   async put({ data, ctx, transaction: t }) {
     let transaction;
@@ -209,11 +240,28 @@ export default class Entity {
         order.push(orderField.name);
       }
     }
-    if (this[tables] && !data.noOptions) {
+
+    const allTables = this[tables] ? Object.keys(this[tables]) : [];
+    const tablesCount = allTables.length;
+    const getOptions = { ...this[modelGetOptions] };
+    const tablesIncludes = getOptions.include.filter(i => i.isTable);
+    const apartTables = data.apartTables && (tablesCount > 1);
+
+    if (this[tables] && !data.noOptions && !data.noTables && !apartTables) {
       Object.keys(this[tables]).forEach(tableName =>
         order.push([{ model: this[tables][tableName][model], as: tableName }, 'rowNumber']));
     }
     const options = data.noOptions ? {} : { ...this[modelGetOptions], order };
+    if (data.noTables) {
+      options.include = options.include.filter(i => !i.isTable);
+    }
+
+    if (apartTables) {
+      options.include = options.include.filter(i => !i.isTable);
+      options.include.push(tablesIncludes.find(i => i.as === allTables[0]));
+      order.push([{ model: this[tables][allTables[0]][model], as: allTables[0] }, 'rowNumber']);
+    }
+
     if (!data.order) delete data.order; // to avoid replace in spread below
     const result = await this[model].findAll({
       ...options,
@@ -221,6 +269,31 @@ export default class Entity {
       transaction,
       lock,
     });
-    return { response: data.raw ? result : result.map(item => item.toJSON()) };
+
+    const resultJson = result.map(item => item.toJSON());
+
+    if (apartTables) {
+      allTables.shift();
+      const uuids = resultJson.map(item => item.uuid);
+      await Promise.all(allTables.map(async (tableName) => {
+        let tableItems = await this[tables][tableName][model].findAll({
+          where: {
+            [`${this[tables][tableName].parent}Uuid`]: {
+              [this[model].db.Sequelize.Op.in]: uuids,
+            },
+          },
+          ...this[tables][tableName][modelGetOptions],
+          order: [['rowNumber']],
+          transaction,
+          lock,
+        });
+        tableItems = tableItems.map(i => i.toJSON());
+        resultJson.forEach((item) => {
+          item[tableName] = tableItems.filter(i => i[`${this[tables][tableName].parent}Uuid`] === item.uuid);
+        });
+      }));
+    }
+
+    return { response: data.raw ? result : resultJson };
   }
 }
