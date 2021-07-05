@@ -288,7 +288,6 @@ export default class Entity {
           lock,
         });
         tableItems = tableItems.map(i => i.toJSON());
-        console.log('table items', tableItems);
         resultJson.forEach((item) => {
           item[tableName] = tableItems.filter(i => i[`${this[tables][tableName].parent}Uuid`] === item.uuid);
         });
