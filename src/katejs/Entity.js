@@ -270,7 +270,7 @@ export default class Entity {
       lock,
     });
 
-    const resultJson = result.map(item => item.toJSON());
+    const resultJson = data.raw ? [] : result.map(item => item.toJSON());
 
     if (apartTables) {
       allTables.shift();
