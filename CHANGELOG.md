@@ -85,7 +85,8 @@
 - adjust modal zindex
 - expose modelGetOptions
 
-# 1.1.27
+# 1.1.28
 - `noTables`,`apartTables` options in Entity.query
 - load tables apart in Entity.get
 - List form use `noTables` options in query by default
+- form close history.back option
