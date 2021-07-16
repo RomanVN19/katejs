@@ -101,7 +101,11 @@ const makeItemForm = ({ structure, name, addActions = true, addElements = true }
       }
     }
     close () {
-      this.app.open(`${name}List`, {});
+      if (this.app.formCloseHistoryBack) {
+        window.history.back();
+      } else {
+        this.app.open(`${name}List`, {});
+      }
     };
     async ok() {
       await this.save();
