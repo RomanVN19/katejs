@@ -12,7 +12,7 @@ const trivialLogger = {
   debug: (...args) => console.log(...args),
   error: (...args) => console.error(...args),
 };
-const terms = Symbol('terms');
+export const terms = Symbol('terms');
 
 class AppServer {
   constructor({ logger, env, translations }) {
