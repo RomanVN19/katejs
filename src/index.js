@@ -2,12 +2,12 @@
 Copyright © 2018 Roman Nep <neproman@gmail.com>
 */
 
-import Server from './KateServer';
+import Server, { terms } from './KateServer';
 import { apiUrl } from './http';
 import Fields from './fields';
 import { makeEntitiesFromStructures, trivialLogger } from './server';
 import Entity from './Entity';
-import { literal, model, modelGetOptions, modelUpdateFields } from './Entity';
+import { literal, model, modelGetOptions, modelUpdateFields, tables, capitalize } from './Entity';
 
 const use = (parent, ...classes) => {
   let result = parent;
@@ -41,4 +41,7 @@ export {
   model,
   modelGetOptions,
   modelUpdateFields,
+  tables,
+  terms,
+  capitalize,
 };
