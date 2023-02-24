@@ -58,7 +58,7 @@
     "redux-logger": "^3.0.6",
     "regenerator-runtime": "^0.13.3",
     "scheduler": "0.14.0",
-    "sequelize": "^5.21.0",
+    "sequelize": "^6.29.0",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
